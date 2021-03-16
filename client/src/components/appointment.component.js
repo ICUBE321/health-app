@@ -12,7 +12,6 @@ export default class Appointments extends Component {
     render() {
         return (
             <div>
-                <p>This is the prescrptions page.</p>
                 <Accordion>
                     <Card>
                         <Accordion.Toggle as={Card.Header} eventKey="0">
