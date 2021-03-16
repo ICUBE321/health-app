@@ -33,7 +33,7 @@ const userRouter = require('./routes/user')
 
 
 //use routes to get frontend requests and process them
-app.use('/login', (req, res) => {
+app.use('/api/login', (req, res) => {
   res.send({
     token: 'test123'
   });
