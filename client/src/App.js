@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/navbar.component"
 import Appointments from "./components/appointment.component";
 import Homepage from "./components/homepage.component";
+import Prescriptions from "./components/prescription.component";
 
 //always show navbar on each component page
 //each component route path defined
@@ -16,6 +17,8 @@ function App () {
                     <br/>
                     <Route path="/" exact component={Homepage} />
                     <Route path="/appointments" exact component={Appointments}/>
+                    <Route path="/prescriptions" exact component={Prescriptions}/>
+
                 </div>
             </Router>
         );
