@@ -17,6 +17,12 @@ export default class Navbar extends Component {
                         <li className="navbar-item">
                             <Link to="/prescriptions" className="nav-link">Your Prescriptions</Link>
                         </li>
+                        <li className="navbar-item">
+                            <Link to="/findlab" className="nav-link">Find Labs near you</Link>
+                        </li>
+                        <li className="navbar-item">
+                            <Link to="/findclinic" className="nav-link">Find clinics near you</Link>
+                        </li>
                     </ul>
                 </div>
             </nav>

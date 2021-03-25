@@ -10,6 +10,28 @@ const userSchema = new Schema({
     lastname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    detail:{
+        age: { type: Number, required: true },
+        height: { type: Number, required: true },
+        weight: { type: Number, required: true },
+        bloodtype: { type: String, required: true },
+        allergies: { type: Array },
+        organdonor: { type: Boolean, required: true },
+        healthprobs: { type: Array }
+    },
+    prescription:{
+        date: { type: Date, required: true },
+        ailment: { type: String, required: true },
+        medicine: { type: String, required: true },
+        volume: { type: Number, required: true },
+        prescribed_quantity: { type: Number, required: true },
+        refill: { type: Boolean, required: true }
+    },
+    appointment:{
+        date: { type: Date, required: true },
+        time: { type: String, required: true },
+        doctor:{type: String, required:true}
+    }
 }, {
     timestamps: true,
 });

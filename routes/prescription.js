@@ -2,7 +2,7 @@
 const router = require('express').Router();
 
 //use prescription model
-let Prescription = require('../models/prescription.model');
+let Prescription = require('../models/user.model/prescription');
 
 //processing of routes
 router.route('/').get((req, res) => {
@@ -12,7 +12,6 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-    const healthcard = req.body.healthcard;
     const date = req.body.date;
     const ailment = req.body.ailment;
     const medicine = req.body.medicine;
