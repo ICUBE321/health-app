@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
 import './login.css'
-import axios from 'axios';
 
 //function to login the user and call fecth method using POST option
 async function loginUser(credentials) {

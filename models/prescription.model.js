@@ -9,9 +9,9 @@ const prescriptionSchema = new Schema({
     date: { type: Date, required: true },
     ailment: { type: String, required: true },
     medicine: { type: String, required: true },
-    volume: { type: Number, required: true },
-    prescribed_quantity: { type: Number, required: true },
-    refill: { type: Boolean, required: true }
+    volume: { type: String, required: true },
+    prescribed_quantity: { type: String, required: true },
+    refill: { type: String, required: true }
 }, {
     timestamps: true,
 });

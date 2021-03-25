@@ -43,7 +43,7 @@ export default class Appointments extends Component {
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
-                </Accordion>
+                </Accordion> 
             </div>
         )
     }
