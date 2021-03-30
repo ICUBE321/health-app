@@ -1,5 +1,7 @@
 import React, { Component, useState } from 'react';
 import Login from "./login.component";
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default class Signup extends Component {
     constructor(props) {
@@ -63,6 +65,12 @@ export default class Signup extends Component {
             healthcardno: this.state.healthcardno,
             password:this.state.password
         };
+
+        axios.post('/user/add', reg)
+             .then(res => console.log(res.data));
+
+        window.location = "/details";
+
     }
 
     render() {

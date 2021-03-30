@@ -9,7 +9,6 @@ import Prescriptions from "./components/prescription.component";
 import Login from "./components/login.component";
 import FindClinic from "./components/findclinic.component";
 import FindLab from "./components/findlab.component";
-import Menu from "./components/menu.component";
 import Profile from "./components/profile.component";
 import DocLogin from "./components/docsignin.component";
 import Signup from "./components/signup.component";
@@ -35,14 +34,14 @@ function App () {
             <div className="container">
                 <Navbar />
                 <br/>
-                <Route path="/" exact component={Homepage} />
+                <Route path="/home" exact component={Homepage} />
                 <Route path="/appointments" exact component={Appointments}/>
                 <Route path="/prescriptions" exact component={Prescriptions}/>
                 <Route path="/signup" exact component={Signup}/>
                 <Route path="/login" exact component={Login}/>
                 <Route path="/findclinic" exact component={FindClinic}/>
                 <Route path="/findlab" exact component={FindLab}/>
-                <Route path="/menu" exact component={Menu}/>
+                <Route path="/details" exact component={Detail}/>
                 <Route path="/profile" exact component={Profile}/>
                 <Route path="/dlogin" exact component={DocLogin}/>
 

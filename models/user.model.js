@@ -11,7 +11,7 @@ const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     detail:{
-        age: { type: Number, required: true },
+        DOB: { type: Date, required: true },
         height: { type: Number, required: true },
         weight: { type: Number, required: true },
         bloodtype: { type: String, required: true },
