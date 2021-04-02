@@ -2,7 +2,7 @@
 const router = require('express').Router();
 
 //use detail model
-let Detail = require('../models/detail.model');
+let Detail = require('../models/user.model/detail');
 
 //processing of routes
 router.route('/').get((req, res) => {
@@ -12,7 +12,6 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-    const healthcard = req.body.healthcard;
     const age = req.body.age;
     const height = req.body.height;
     const weight = req.body.weight;

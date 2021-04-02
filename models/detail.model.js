@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 //create new Detail schema/document for the database
 const detailSchema = new Schema({
     healthcardno: { type: String, required: true, unique: true, trim: true, minlength: 3 },
-    age: { type: Number, required: true },
+    DOB: { type: Date, required: true },
     height: { type: Number, required: true },
     weight: { type: Number, required: true },
     bloodtype: { type: String, required: true },

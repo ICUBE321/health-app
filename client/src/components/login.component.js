@@ -1,63 +1,74 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Button, Form } from 'react-bootstrap';
-import './login.css'
+import React, { Component, useState } from 'react';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 
-//function to login the user and call fecth method using POST option
-async function loginUser(credentials) {
-    return fetch('/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    })
-        .then(data => data.json())
-}
 
-export default function Login({setToken}) {
-    //local state to capture username and password
-    const [username, setUserName] = useState();
-    const [password, setPassword] = useState();
 
-    //submit handler to call loginUser with username and password, 
-    //call setToken upon successful result
-    const handleSubmit = async e => {
-        e.preventDefault();
-        const token = await loginUser({
-            username,
-            password
-        });
-        setToken(token);
+export default class Login extends Component                            {
+    constructor(props){
+        super(props);
+
+        this.onChangeHealthcardno = this.onChangeHealthcardno.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+        this.onHandleSubmit = this.onHandleSubmit.bind(this);
+
+        this.state={
+            healthcardno: '',
+            password: ''
+
+        }
     }
 
-    return(
-        <Form onSubmit={handleSubmit}>
-            <h1>Please Log In</h1>
-            <Form.Group>
-                <Form.Label>Health Card Number</Form.Label>
-                <Form.Control type="text" placeholder="Enter health card number" onChange={e => setUserName(e.target.value)}/>
-            </Form.Group>
-            <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
-            </Form.Group>
-            <Form.Group>
-                <Button variant="primary" type="submit">
-                    Login
-                </Button>
-            </Form.Group>
-            <Form.Group>
-                <Button variant="primary">
-                    Register
-                </Button>
-            </Form.Group>
-        </Form>
-    )
-}
+    onChangeHealthcardno(e){
+        this.setState({
+            healthcardno: e.target.value
+        });
+    }
 
-//add in PropType from the new prop and destructure the props object to pull out setToken prop
-Login.propTypes = {
-    setToken: PropTypes.func.isRequired
-}
+    onChangePassword(e){
+        this.setState({
+            password: e.target.value
+        });
+    }
+
+    onHandleSubmit(e){
+        e.preventDefault();
+
+        const signin = {
+            healthcardno: this.state.healthcardno,
+            password: this.state.password
+        };
+    }
+
+    
+
+
+    render(){
+        return(
+            <div>
+            <div id="intro" className="mx-auto">
+                <h3><span className="badge badge-secondary">USER LOGIN</span></h3>
+            </div>
+
+            <div>
+                <form onSubmit={this.onHandleSubmit} id="uloginform" method="post">
+                    <div className="form-group">
+                        <label for="hcn">Healthcard Number</label>
+                        <input type="number" maxLength="10" minLength="10" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" className="form-control" id="uhcn" value={this.state.healthcardno} onChange={this.onChangeHealthcardno}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" className="form-control" id="upass" value={this.state.password} onChange={this.onChangePassword}/>
+                    </div>
+
+                    <button type="submit" className="btn btn-primary btn-lg" id="btn-signin">Login</button>
+                </form>
+            </div>
+            
+        </div>
+
+        );
+    }
+
+} 
