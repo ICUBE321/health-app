@@ -8,7 +8,7 @@ export default class FindClinic extends Component {
     render() {
         return (
             <div>
-                <h1>A Homepage.</h1>
+               
             </div>
         )
     }
