@@ -3,23 +3,6 @@ import axios from 'axios';
 import { Component } from 'react';
 import { Accordion, Card, Button } from 'react-bootstrap';
 
-const Prescription = props => (
-    <Card>
-        <Accordion.Toggle as={Card.Header} eventKey={props.key}>
-            {props.prescription.medicine}
-        </Accordion.Toggle>
-        <Accordion.Collapse eventKey={props.key}>
-            <Card.Body>
-                <p>{props.prescription.date}</p>
-                <p>{props.prescription.ailment}</p>
-                <p>{props.prescription.volume}</p>
-                <p>{props.prescription.quantity}</p>
-                <p>{props.prescription.refill}</p>
-            </Card.Body>
-        </Accordion.Collapse>
-    </Card>
-)
-
 export default class Prescriptions extends Component {
     constructor(props) {
         super(props);
@@ -39,12 +22,6 @@ export default class Prescriptions extends Component {
             })
     }
 
-    prescriptionList() {
-        return this.state.prescriptions.map(currentprescription => {
-            return <Prescription prescription={currentprescription} key={currentprescription._id}/>;
-        })
-    }
-
     render() {
         return (
             <div>
@@ -54,7 +31,33 @@ export default class Prescriptions extends Component {
                     }}>Add Prescription</Button>
                 </div>
                 <Accordion>
-                    { this.prescriptionList() }
+                    {this.state.prescriptions.map(({ healthcardno,
+                                                        date,
+                                                        ailment,
+                                                        medicine,
+                                                        volume,
+                                                        prescribed_quantity,
+                                                        refill
+                                                         }) => (
+                                                             <Card>
+                                                                 <Card.Header>
+                                                                    <Accordion.Toggle eventKey={healthcardno, medicine, ailment}>
+                                                                        Medicine: {medicine}
+                                                                    </Accordion.Toggle>
+                                                                 </Card.Header>
+                                                                 <Accordion.Collapse eventKey={healthcardno, medicine, ailment}>
+                                                                    <Card.Body>
+                                                                        <p>Patient Health Card Number: {healthcardno}</p>
+                                                                        <p>Date: {date}</p>
+                                                                        <p>Ailment: {ailment}</p>
+                                                                        <p>Frequency: {volume}</p>
+                                                                        <p>Amount: {prescribed_quantity}</p>
+                                                                        <p>Refills: {refill}</p>
+                                                                    </Card.Body>
+                                                                 </Accordion.Collapse>
+                                                             </Card>
+                                                             
+                                                         ))}
                 </Accordion> 
             </div>
         )

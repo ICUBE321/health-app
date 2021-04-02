@@ -12,21 +12,21 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-    const healthcard = req.body.healthcard;
-    const date = req.body.date;
+    const healthcardno = req.body.healthcardno;
+    const date = Date.parse(req.body.date);
     const ailment = req.body.ailment;
     const medicine = req.body.medicine;
     const volume = req.body.volume
-    const quantity = req.body.quantity;
-    const refill = req.body.refill;
+    const prescribed_quantity = req.body.prescribed_quantity; 
+    const refill = req.body.refill; 
  
     const newPrescription = new Prescription({
-        healthcard,
+        healthcardno,
         date,
         ailment,
         medicine,
         volume,
-        quantity,
+        prescribed_quantity,
         refill,
     });
 

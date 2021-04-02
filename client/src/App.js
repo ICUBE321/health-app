@@ -9,6 +9,7 @@ import Prescriptions from "./components/prescription.component";
 import Login from "./components/login.component";
 import useToken from "./useToken";
 import addPrescription from "./components/addPrescription.component";
+import addAppointments from "./components/addAppointment.component";
 
 //always show navbar on each component page
 //each component route path defined
@@ -31,6 +32,7 @@ function App () {
                 <br/>
                 <Route path="/" exact component={Homepage} />
                 <Route path="/appointments" exact component={Appointments}/>
+                <Route path="/addAppointment" exact component={addAppointments}/>
                 <Route path="/prescriptions" exact component={Prescriptions}/>
                 <Route path="/addPrescription" exact component={addPrescription}/>
             </div>

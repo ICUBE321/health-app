@@ -12,12 +12,12 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-    const healthcard = req.body.healthcard;
-    const date = req.body.date;
+    const healthcardno = req.body.healthcardno;
+    const date = Date.parse(req.body.date);
     const time = req.body.time;
 
     const newAppointment = new Appointment({
-        healthcard,
+        healthcardno,
         date,
         time,
     });

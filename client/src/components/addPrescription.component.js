@@ -2,9 +2,21 @@
 //should only be accessible by doctors
 
 import { Component } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import "./form.css"
+import axios from "axios";
+
+const initialValues = {
+    date: Date,
+    medicine: "",
+    ailment: "",
+    amount: "",
+    frequency: "",
+    refills: "",
+    healthcardno: "",
+};
 
 const addPrescriptionSchema = Yup.object().shape({
     date: Yup.date().required("Date is required"),
@@ -22,147 +34,150 @@ export default class addPrescription extends Component {
         super(props);
 
         this.state = {
-            date: Date,
-            medicine: "",
-            ailment: "",
-            amount: "",
-            frequency: "",
-            refills: "",
-            healthcardno: "",
-        } 
-
-        this.onAddPrescription = this.onAddPrescription.bind(this);
-        this.onChangeAilment = this.onChangeAilment.bind(this);
-        this.onChangeAmount = this.onChangeAmount.bind(this);
-        this.onChangeDate = this.onChangeDate.bind(this);
-        this.onChangeFrequency = this.onChangeFrequency.bind(this);
-        this.onChangeHealthCardNo = this.onChangeHealthCardNo.bind(this);
-        this.onChangeMedicine = this.onChangeMedicine.bind(this);
-        this.onChangeRefills = this.onChangeRefills .bind(this);
-    }
-
-    onChangeDate(e) {
-        this.setState({
-            date: e.target.value 
-        });
-    }
-
-    onChangeMedicine(e) {
-        this.setState({
-            medicine: e.target.value
-        });
-    }
-
-    onChangeAilment(e) {
-        this.setState({
-            ailment: e.target.value
-        });
-    }
-
-    onChangeAmount(e) {
-        this.setState({
-            amount: e.target.value
-        });
-    }
-
-    onChangeFrequency(e) {
-        this.setState({
-            frequency: e.target.value
-        });
-    }
-
-    onChangeRefills(e) {
-        this.setState({
-            refills: e.target.value
-        });
-    }
-
-    onChangeHealthCardNo(e) {
-        this.setState({
-            healthcardno: e.target.value
-        });
-    }
-
-    onAddPrescription(e) {
-        e.preventDefault();
-
-        const newPrescription = {
-            date: this.state.date,
-            medicine: this.state.medicine,
-            ailment: this.state.ailment,
-            amount: this.state.amount,
-            frequency: this.state.frequency,
-            refills: this.state.refills,
-            healthcardno: this.state.healthcardno
-        };
-
-        console.log(newPrescription);
+            healthcardno : "",
+            date : new Date(),
+            ailment : "",
+            medicine : "",
+            volume : "",
+            quantity : "", 
+            refill : "",
+        }
     }
 
     render() {
         return (
-            <Form noValidate validated={validated} onSubmit={this.onAddPrescription}>
-                <Form.Group controlId="form.ControlInput0">
-                    <Form.Label>Patient Health Card Number</Form.Label>
-                    <Form.Control name="healthcardno"
-                        value={this.state.healthcardno}
-                        onChange={this.onChangeHealthCardNo}
-                        type="text"
-                        required />
-                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group controlId="form.ControlInput1">
-                    <Form.Label>Date Assigned</Form.Label>
-                    <Form.Control
-                        name="date"
-                        onChange={this.onChangeDate}
-                        type="date"
-                        required />
-                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group controlId="form.ControlInput2">
-                    <Form.Label>Medicine Name</Form.Label>
-                    <Form.Control value={this.state.medicine}
-                        name="medicine"
-                        onChange={this.onChangeMedicine}
-                        type="text" 
-                        placeholder="zofran"
-                        required/>
-                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group controlId="form.ControlInput3">
-                    <Form.Label>Patient Ailment</Form.Label>
-                    <Form.Control value={this.state.ailment}
-                        name="ailment"
-                        onChange={this.onChangeAilment}
-                        type="text" 
-                        placeholder="nausea"
-                        required/>
-                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group controlId="form.ControlInput4">
-                    <Form.Label>Dispensed Amount</Form.Label>
-                    <Form.Control value={this.state.amount}
-                        name="amount"
-                        onChange={this.onChangeAmount}
-                        type="text" placeholder="30-thirty"/>
-                </Form.Group>
-                <Form.Group controlId="form.ControlInput5">
-                    <Form.Label>Prescribed Frequency</Form.Label>
-                    <Form.Control value={this.state.frequency}
-                        name="frequency"
-                        onChange={this.onChangeFrequency}
-                        type="text" placeholder="daily"/>
-                </Form.Group>
-                <Form.Group controlId="form.ControlInput6">
-                    <Form.Label>Refills</Form.Label>
-                    <Form.Control value={this.state.refills}
-                        name="refills"
-                        onChange={this.onChangeRefills}
-                        type="text" placeholder="11 refills"/>
-                </Form.Group>
-                <Button variant="primary" type="submit">Submit</Button>
-            </Form>
+            <Formik initialValues={initialValues}
+             validationSchema={addPrescriptionSchema} 
+             onSubmit={(values) => {
+
+                this.setState({
+                    healthcardno : values.healthcardno,
+                    date : values.date,
+                    ailment : values.ailment,
+                    medicine : values.medicine,
+                    volume : values.frequency,
+                    quantity : values.amount, 
+                    refill : values.refills,
+                })
+
+                //make up new prescription using values
+                const newPrescription = {
+                    healthcardno : this.state.healthcardno,
+                    date : this.state.date,
+                    ailment : this.state.ailment,
+                    medicine : this.state.medicine,
+                    volume : this.state.volume,
+                    prescribed_quantity : this.state.quantity, 
+                    refill : this.state.refill,
+                };
+
+                axios.post('/api/prescription/add', newPrescription)
+                    .then(response => console.log(response.data))
+                    .catch(error => {
+                        if (error.response){
+                                console.log("Error response: " + error.response.data);  
+                            }else if(error.request){
+                                console.log("Error request: " + error.request);  
+                            }else if(error.message){
+                                console.log("Error message: " + error.message);  
+                            }
+                    })
+                
+                window.location = '/api/prescription';
+
+                 console.log(values);
+                 console.log(newPrescription);
+                }}>
+                    {(formik) => {
+                        const { errors, touched, isValid, dirty } = formik;
+                        return (
+                            <Form>
+                                <div>
+                                <label>Patient Health Card Number</label>
+                                <Field name="healthcardno"
+                                    id="healthcardno"
+                                    className={errors.healthcardno && touched.healthcardno ?
+                                    "input-error" : null}
+                                    type="text"
+                                    placeholder="12345"
+                                     />
+                                     <ErrorMessage name="healthcardno" component="span" className="error"/>
+                                </div>
+                                <div>
+                                <label>Date Assigned</label>
+                                <Field name="date"
+                                    id="date"
+                                    className={errors.date && touched.date ?
+                                    "input-error" : null}
+                                    type="date"
+                                     />
+                                     <ErrorMessage name="date" component="span" className="error"/>
+                                </div>
+                                <div>
+                                <label>Medicine Name</label>
+                                <Field name="medicine"
+                                    id="medicine"
+                                    className={errors.medicine && touched.medicine ?
+                                    "input-error" : null}
+                                    type="text"
+                                    placeholder="zoran"
+                                     />
+                                     <ErrorMessage name="medicine" component="span" className="error"/>
+                                </div>
+                                <div>
+                                <label>Patient Ailment</label>
+                                <Field name="ailment"
+                                    id="ailment"
+                                    className={errors.ailment && touched.ailment ?
+                                    "input-error" : null}
+                                    type="text"
+                                    placeholder="nausea"
+                                     />
+                                     <ErrorMessage name="ailment" component="span" className="error"/>
+                                </div>
+                                <div>
+                                <label>Dispensed Amount</label>
+                                <Field name="amount"
+                                    id="amount"
+                                    className={errors.amount && touched.amount ?
+                                    "input-error" : null}
+                                    type="text"
+                                    placeholder="30-thirty"
+                                     />
+                                     <ErrorMessage name="amount" component="span" className="error"/>
+                                </div>
+                                <div>
+                                <label>Prescribed Frequency</label>
+                                <Field name="frequency"
+                                    id="frequency"
+                                    className={errors.frequency && touched.frequency ?
+                                    "input-error" : null}
+                                    type="text"
+                                    placeholder="daily"
+                                     />
+                                     <ErrorMessage name="frequency" component="span" className="error"/>
+                                </div>
+                                <div>
+                                <label>Refills</label>
+                                <Field name="refills"
+                                    id="refills"
+                                    className={errors.refills && touched.refills ?
+                                    "input-error" : null}
+                                    type="text" 
+                                    placeholder="11 refills"
+                                     />
+                                     <ErrorMessage name="refills" component="span" className="error"/>
+                                </div>
+                                <Button variant="primary" 
+                                    type="submit"
+                                    className={!(dirty && isValid) ? "disabled-btn" : ""}
+                                    disabled={!(dirty && isValid)}>
+                                        Submit
+                                    </Button>
+                            </Form>
+                        )
+                    }}
+            </Formik>
         )
-    }
+    };
 }
