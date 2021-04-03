@@ -2,7 +2,7 @@
 const router = require('express').Router();
 
 //use detail model
-let Detail = require('../models/user.model/detail');
+let Detail = require('../models/detail.model');
 
 //processing of routes
 router.route('/').get((req, res) => {

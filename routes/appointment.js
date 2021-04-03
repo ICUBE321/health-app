@@ -2,7 +2,7 @@
 const router = require('express').Router();
 
 //use appointment model
-let Appointment = require('../models/user.model/appointment');
+let Appointment = require('../models/appointment.model');
 
 //processing of routes
 router.route('/').get((req, res) => {

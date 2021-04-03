@@ -2,7 +2,7 @@
 const router = require('express').Router();
 
 //use prescription model
-let Prescription = require('../models/user.model/prescription');
+let Prescription = require('../models/prescription.model');
 
 //processing of routes
 router.route('/').get((req, res) => {
