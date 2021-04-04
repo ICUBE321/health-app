@@ -4,10 +4,10 @@ export default class DocLogin extends Component {
     constructor(props) {
         super(props);
 
-        onChangeHospitalCode = this.onChangeHospitalCode.bind(this);
-        onChangePassword = this.onChangePassword.bind(this);
-        onHandleSubmit = this.onHandleSubmit.bind(this);
-        onChangeDocID = this.onChangeDocID.bind(this);
+        this.onChangeHospitalCode = this.onChangeHospitalCode.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+        this.onHandleSubmit = this.onHandleSubmit.bind(this);
+        this.onChangeDocID = this.onChangeDocID.bind(this);
 
         this.state = {
             hospitalcode: '',
