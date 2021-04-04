@@ -14,9 +14,20 @@ export default class Login extends Component                            {
 
         this.state={
             healthcardno: '',
-            password: ''
+            password: '',
+            user: []
 
         }
+    }
+
+    componentDidMount(){
+       axios.get('/users/')
+            .then(response => {
+                this.setState({ user: response.data});
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
 
     onChangeHealthcardno(e){
