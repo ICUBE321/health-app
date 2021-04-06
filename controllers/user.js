@@ -8,9 +8,7 @@ exports.signup = (req, res, next) => {
             User.findOne({ healthcardno: req.body.healthcardno })
                 .then((user) => {
                     if (user) {
-                        return res.status(401).json({
-                            error: new Error('Healthcard number already in use!')
-                        });
+                        return res.status(401).send('Healthcard number already in use!');
                     }
                     const healthcardno = req.body.healthcardno;
                     const firstname = req.body.firstname;
@@ -38,16 +36,14 @@ exports.login = (req, res, next) => {
         .then(
             (user) => {
                 if (!user) {
-                    return res.status(401).json({
-                        error: new Error('User not found!')
-                    });
+                    console.error('No user found!');
+                    return res.status(401).send('No user found!');
                 }
                 bcrypt.compare(req.body.password, user.password).then(
                     (valid) => {
                         if (!valid) {
-                            return res.status(401).json({
-                                error: new Error('Incorrect password!')
-                            });
+                            console.error('Incorrect password!');
+                            return res.status(401).send('Incorrect password!');
                         }
 
                         const token = jwt.sign(

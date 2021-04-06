@@ -13,6 +13,7 @@ router.post('/appointment/add', stuffCtrl.createAppointment);
 //processing of routes
 router.get('/detail', stuffCtrl.getDetail);
 router.post('/detail/add', stuffCtrl.createDetail);
+router.post('/detail/edit', stuffCtrl.editDetail);
 
 //processing of routes
 router.get('/doctor/', stuffCtrl.getDoctors);

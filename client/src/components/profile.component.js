@@ -13,8 +13,6 @@ export default class Profile extends Component {
     }
 
     componentDidMount(){
-        console.log("Local storage state in profile page: ");
-        console.log(this.state.user);
         this.userDetails();
     }
 
@@ -37,12 +35,15 @@ export default class Profile extends Component {
                  .then((response) => {
                      const data = response.data;
                      this.setState({details: data});
-                     console.log(data);
                  })
                  .catch((error) => { 
-                     alert("Error displaying user's profile: " + error);
+                     console.log(error.response.data);
+                     window.alert(error.response.data);
                  });
-            })
+            }).catch(error => {
+                console.log(error.response.data);
+                window.alert(error.response.data);
+            });
         }
     }
 

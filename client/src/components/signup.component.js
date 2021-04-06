@@ -15,7 +15,7 @@ export default class Signup extends Component {
         this.state = {
              firstname: '',
              lastname: '',
-             healthcardno: '',
+             healthcardno: Number,
              email: '',
              password:''
         }
@@ -69,7 +69,8 @@ export default class Signup extends Component {
                 window.location = "/login";
                 console.log(res.data)
              }).catch(error => {
-                 console.log("Error while signing up: " + error);
+                 console.log(error.response.data);
+                 window.alert(error.response.data);
                 });
     }
 
@@ -94,7 +95,7 @@ export default class Signup extends Component {
 
                         <div className="form-group">
                             <label for="hcn">Healthcard Number</label>
-                            <input type="number" maxLength="10" minLength="10" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" className="form-control" id="uhcn" value={this.state.healthcardno} onChange={this.onChangeHealthcardno}/>
+                            <input type="number" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" className="form-control" id="uhcn" value={this.state.healthcardno} onChange={this.onChangeHealthcardno}/>
                         </div>
 
                         <div className="form-group">

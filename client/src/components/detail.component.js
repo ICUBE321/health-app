@@ -7,6 +7,7 @@ export default class Detail extends Component {
 
         this.state = {
             user: localStorage.getItem('user'),
+            healthcardno: Number,
             edit: false,
             DOB: Date,
             weight: Number,
@@ -29,8 +30,6 @@ export default class Detail extends Component {
     }
 
     componentDidMount(){
-        console.log("Local storage state in detail adding page: ");
-        console.log(this.state.user);
         this.userDetails();
     }
 
@@ -44,34 +43,43 @@ export default class Detail extends Component {
                     id: userId
                 }
             }).then(res => {
+
+                this.setState({
+                    healthcardno: res.data[0].healthcardno
+                })
+
                 const cardno = res.data[0].healthcardno;
+
                 axios.get('/api/detail', {
                     params: {
                         healthcardno: cardno
                     }
-                })
-                 .then((response) => {
-                     const data = response.data;
+                }).then((response) => {
+                     const data = response.data[0];
+                    //  console.log(data);
+                    //  console.log(data.healthcardno.length);
                      this.setState({details: data});
-                     if(this.state.details.length > 0) {
+                     if(data.healthcardno > 0) {
                          this.setState({
                              edit: true,
-                             DOB: this.state.details.DOB,
-                            weight: this.state.details.weight,
-                            height: this.state.details.height,
-                            bloodtype: this.state.details.bloodtype,
-                            allergies: this.state.details.allergies,
-                            organ_donor: this.state.details.donor,
-                            healthprobs: this.state.details.healthprobs,
+                             DOB: data.DOB,
+                             weight: data.weight,
+                             height: data.height,
+                             bloodtype: data.bloodtype,
+                             allergies: data.allergies,
+                             organ_donor: data.donor,
+                             healthprobs: data.healthprobs,
                             });
 
                      }
-                     console.log(data);
+                     console.log(this.state);
+                 }).catch(error => {
+                     console.log(error);    
                  })
-                 .catch((error) => { 
-                     alert("Error displaying user's profile: " + error);
-                 });
-            })
+            }).catch(error => {
+                console.log(error.response.data);
+                window.alert(error.response.data);
+            });
         }
     }
 
@@ -121,37 +129,39 @@ export default class Detail extends Component {
         e.preventDefault();
 
         const user = localStorage.getItem('user');
-        console.log(user);
         const parsedUser = JSON.parse(user);
-        console.log(parsedUser);
         if(parsedUser.length > 0) {
-            axios.get("/api/user", {
-                params: {
-                    id: parsedUser[0]
-                }
-            }).then(res => {
-                    console.log(res);
-                    const cardno = res.data[0].healthcardno;
+                const details = {
+                    healthcardno: this.state.healthcardno,
+                    DOB: this.state.DOB,
+                    height: this.state.height,
+                    weight: this.state.weight,
+                    bloodtype: this.state.bloodtype,
+                    allergies: this.state.allergies,
+                    organ_donor: this.state.organ_donor,
+                    healthprobs: this.state.healthprobs
+                };
 
-                    const details = {
-                        healthcardno: cardno,
-                        DOB: this.state.DOB,
-                        height: this.state.height,
-                        weight: this.state.weight,
-                        bloodtype: this.state.bloodtype,
-                        allergies: this.state.allergies,
-                        organ_donor: this.state.organ_donor,
-                        healthprobs: this.state.healthprobs
-                    };
-                    console.log(details);
-
+                if(this.state.edit) {
+                    axios.post('/api/detail/edit', details, {
+                        params: {
+                            healthcardno: details.healthcardno
+                        }
+                    }).then(res => {
+                        console.log(res.data);
+                        window.location = "/";
+                    })
+                } else {
                     axios.post('/api/detail/add/', details)
-                        .then(res => {
-                            console.log(res.data);
-                            window.location = "/home";
-                            })
-                        .catch(error => console.log("Error while adding user details: " + error));
-                }).catch(error => console.log("Error while fetching user data: "+error));
+                    .then(res => {
+                        console.log(res.data)
+                        window.location = "/";
+                        })
+                    .catch(error => {
+                        console.log(error.response.data);
+                        window.alert(error.response.data);
+                    });
+                }
         }
     }
 

@@ -19,16 +19,12 @@ export default class Login extends Component {
     componentDidMount() {
         const user = localStorage.getItem('user');
         this.setState({ user: user });
-        console.log("Local storage state in login page: ");
-        console.log(this.state.user);
         this.goToDetails();
     }
 
     goToDetails() {
         const loggedInUser = localStorage.getItem("user");
         if (loggedInUser) {
-            console.log("In go to details function: ");
-            console.log(loggedInUser);
             window.location = "/profile";
         }
     }
@@ -51,12 +47,9 @@ export default class Login extends Component {
             username: this.state.username, 
             password: this.state.password,
         };
-        console.log("User data trying to log in: ");
-        console.log(user);
         //send the username and password to server
         axios.post("/api/auth/login", user)
             .then(res => {
-                console.log(res.data);
                 var items = [];
                 items.push(res.data.userId);
                 items.push(res.data.token);
@@ -67,8 +60,11 @@ export default class Login extends Component {
                 });
                 //console.log(r);
                 this.goToDetails();
-            }
-        ).catch(error => console.log("Error while logging in: " + error));
+            } 
+        ).catch(error => {
+            console.log(error.response.data);
+            window.alert(error.response.data);
+        });
     };
 
     //if there's a user show the message below

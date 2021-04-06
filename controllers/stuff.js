@@ -29,7 +29,10 @@ exports.getDetail = (req, res) => {
     let healthcardno = req.query.healthcardno;
     Detail.find({"healthcardno": healthcardno})
         .then(detail => res.json(detail))
-        .catch(err => res.status(400).json('Error: ' + err));
+        .catch(error => {
+            console.log(error);
+            res.status(400).send('Error getting details');
+    });
 };
 
 exports.createDetail = (req, res) => {
@@ -54,10 +57,37 @@ exports.createDetail = (req, res) => {
         healthprobs,
     });
 
-    console.log("New detail" + newDetail);
+    //console.log("New detail" + newDetail);
     newDetail.save()
     .then(() => res.json('Detail added!'))
-    .catch(err => res.status(400).json('Error : ' + err));
+    .catch(err => res.status(400).send('Error while adding user details: ' + err));
+};
+
+exports.editDetail = (req, res) => {
+    console.log("Request body: "+req.body.weight);
+    let cardno = req.query.healthcardno;
+    console.log("Card number: "+ cardno);
+    var query = { "healthcardno": cardno };
+    var newDetail = {
+        DOB : Date.parse(req.body.DOB),
+        height : req.body.height,
+        weight : req.body.weight,
+        bloodtype : req.body.bloodtype,
+        allergies : req.body.allergies,
+        donor : req.body.organ_donor,
+        healthprobs : req.body.healthprobs
+    };
+    Detail.updateOne(query, { $set: newDetail }, function(error, result) {    
+        if(error) {
+            console.log(error);
+        } else {
+            console.log(result);
+        }
+    }).then(() => res.json('Detail updated!'))
+        .catch(error => {
+                    console.log(error);
+                    res.status(400).send('Error updating detail!');
+                });
 };
 
 const Doctor = require('../models/doctor.model');
@@ -132,7 +162,10 @@ exports.getUsers = (req, res) => {
     let id = req.query.id;
     User.find({"_id": id})
         .then(users => res.json(users))
-        .catch(err => res.status(400).json('Error finding user with id: ' + err));
+        .catch(err => {
+            console.log(err);
+            res.status(400).send('Error finding user with id');
+        });
 };
 
 

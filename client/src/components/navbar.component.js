@@ -6,16 +6,9 @@ export default class Navbar extends Component {
         super(props);
 
         this.state = {
-            user: '',
+            user: localStorage.getItem('user'),
         };
     }
-
-    componentDidMount() {
-        const user = localStorage.getItem('user');
-        this.setState({ user: user });
-        //console.log("Local storage state in navbar: ");
-        //console.log(this.state.user);
-    } 
 
     handleLogout() {
         localStorage.clear();
@@ -23,7 +16,7 @@ export default class Navbar extends Component {
     }
 
     render() {
-        if(this.state.user != null && this.state.user.username != '') {
+        if(this.state.user && this.state.user.length > 0) {
             return (
                 <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
                 <Link to="/" className="navbar-brand">Health App</Link>
