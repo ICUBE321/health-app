@@ -13,6 +13,7 @@ import Profile from "./components/profile.component";
 import DocLogin from "./components/docsignin.component";
 import Signup from "./components/signup.component";
 import Detail from "./components/detail.component";
+import DocHome from "./components/dochome.component";
 //import useToken from "./useToken";
 
 //always show navbar on each component page
@@ -46,6 +47,7 @@ function App () {
                 <Route path="/details" exact component={Detail}/>
                 <Route path="/profile" exact component={Profile}/>
                 <Route path="/dlogin" exact component={DocLogin}/>
+                <Route path="/dochome" exact component={DocHome}/>
 
 
             </div>

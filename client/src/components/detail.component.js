@@ -112,14 +112,14 @@ export default class Detail extends Component {
 
                         <div className="form-group">
                             <label for="bloodtype">Bloodtype</label>
-                            <input type="radio" className="form-control" id="ubloodtype1" value="A+" checked={this.state.bloodtype === "A+"} onChange={this.onChangeBloodtype}/><br/>
-                            <input type="radio" className="form-control" id="ubloodtype2" value="A-" checked={this.state.bloodtype === "A-"} onChange={this.onChangeBloodtype}/><br/>
-                            <input type="radio" className="form-control" id="ubloodtype3" value="B+" checked={this.state.bloodtype === "B+"} onChange={this.onChangeBloodtype}/><br/>
-                            <input type="radio" className="form-control" id="ubloodtype4" value="B-" checked={this.state.bloodtype === "B-"} onChange={this.onChangeBloodtype}/><br/>
-                            <input type="radio" className="form-control" id="ubloodtype5" value="O+" checked={this.state.bloodtype === "O+"} onChange={this.onChangeBloodtype}/><br/>
-                            <input type="radio" className="form-control" id="ubloodtype6" value="O-" checked={this.state.bloodtype === "O-"} onChange={this.onChangeBloodtype}/><br/>
-                            <input type="radio" className="form-control" id="ubloodtype7" value="AB+" checked={this.state.bloodtype === "AB+"} onChange={this.onChangeBloodtype}/><br/>
-                            <input type="radio" className="form-control" id="ubloodtype8" value="AB-" checked={this.state.bloodtype === "AB-"} onChange={this.onChangeBloodtype}/>
+                                <p>A+<input type="radio" className="form-control" id="ubloodtype1" value="A+" checked={this.state.bloodtype === "A+"} onChange={this.onChangeBloodtype}/> </p><br/>
+                                <p>A-<input type="radio" className="form-control" id="ubloodtype2" value="A-" checked={this.state.bloodtype === "A-"} onChange={this.onChangeBloodtype}/></p><br/>
+                                <p>B+<input type="radio" className="form-control" id="ubloodtype3" value="B+" checked={this.state.bloodtype === "B+"} onChange={this.onChangeBloodtype}/></p><br/>
+                                <p>B-<input type="radio" className="form-control" id="ubloodtype4" value="B-" checked={this.state.bloodtype === "B-"} onChange={this.onChangeBloodtype}/></p><br/>
+                                <p>O+<input type="radio" className="form-control" id="ubloodtype5" value="O+" checked={this.state.bloodtype === "O+"} onChange={this.onChangeBloodtype}/></p><br/>
+                                <p>O-<input type="radio" className="form-control" id="ubloodtype6" value="O-" checked={this.state.bloodtype === "O-"} onChange={this.onChangeBloodtype}/></p><br/>
+                                <p>AB+<input type="radio" className="form-control" id="ubloodtype7" value="AB+" checked={this.state.bloodtype === "AB+"} onChange={this.onChangeBloodtype}/></p><br/>
+                                <p>AB-<input type="radio" className="form-control" id="ubloodtype8" value="AB-" checked={this.state.bloodtype === "AB-"} onChange={this.onChangeBloodtype}/></p>
                             
                         </div>
 
@@ -130,8 +130,8 @@ export default class Detail extends Component {
 
                         <div className="form-group">
                             <label for="organ_donor">Organ Donor</label>
-                            <input type="radio" className="form-control" id="uorgan_donor" value="yes" checked={this.state.organ_donor === "yes"} onChange={this.onChangeOrganDonor}/><br/>
-                            <input type="radio" className="form-control" id="uorgan_donor2" value="no" checked={this.state.organ_donor === "no"} onChange={this.onChangeOrganDonor}/>
+                            <p>Yes<input type="radio" className="form-control" id="uorgan_donor" value="yes" checked={this.state.organ_donor === "yes"} onChange={this.onChangeOrganDonor}/></p><br/>
+                            <p>No<input type="radio" className="form-control" id="uorgan_donor2" value="no" checked={this.state.organ_donor === "no"} onChange={this.onChangeOrganDonor}/></p>
                         </div>
 
                         <div className="form-group">

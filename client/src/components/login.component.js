@@ -5,6 +5,7 @@ import Home from "./homepage.component";
 
 
 
+
 export default class Login extends Component                            {
     constructor(props){
         super(props);
@@ -22,18 +23,18 @@ export default class Login extends Component                            {
         }
     }
 
-    // componentDidMount(){
-    //    axios.get('/users/' + this.props.match.params.id)
-    //         .then(response => {
-    //             this.setState({ 
-    //                 hcnuser: response.data.healthcard,
-    //                 hcnpass: response.data.password
-    //             });
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         })
-    // }
+    componentDidMount(){
+       axios.get('/users/' + this.props.match.params.id)
+            .then(response => {
+                this.setState({ 
+                    hcnuser: response.data.healthcard,
+                    hcnpass: response.data.password
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
 
     onChangeHealthcardno(e){
         this.setState({
@@ -54,28 +55,12 @@ export default class Login extends Component                            {
             healthcardno: this.state.healthcardno,
             password: this.state.password
         };
-        axios.get('/users/' + this.props.match.params.id)
-            .then(response => {
-                this.setState({ 
-                    hcnuser: response.data.healthcard,
-                    hcnpass: response.data.password
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-
-            if(healthcardno === hcnuser && password === hcnpass){
-                alert("you are logged in");
-                this.setState({
-                    healthcardno: ''
-                })
-                window.location = "/home";
-            }
-            else{
-                alert("invalid login");
-                window.location = "/login";
-            }
+        console.log(signin);
+        this.setState({
+            healthcardno: ''
+        });
+        window.location = "/home";
+        
     }
 
     

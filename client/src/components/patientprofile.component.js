@@ -6,15 +6,13 @@ export default class DocLogin extends Component {
     constructor(props) {
         super(props);
 
-        this.onChangeHospitalCode = this.onChangeHospitalCode.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
+        this.onChangePatientName = this.onChangePatientName.bind(this);
         this.onHandleSubmit = this.onHandleSubmit.bind(this);
         this.onChangeDocID = this.onChangeDocID.bind(this);
 
         this.state = {
-            hospitalcode: '',
             docid: '',
-            password: ''
+            patientname: ''
         };
     }
 
@@ -24,29 +22,24 @@ export default class DocLogin extends Component {
         });
     }
 
-    onChangeHospitalCode(e){
+    onChangePatientName(e){
         this.setState({
-            hospitalcode: e.target.value
+            patientname: e.target.value
         });
     }
 
-    onChangePassword(e){
-        this.setState({
-            password: e.target.value
-        });
-    }
+    
 
     onHandleSubmit(e){
         e.preventDefault();
 
-        const docsignin = {
-            hospitalcode: this.state.hospitalcode,
+        const viewprof = {
             docid: this.state.docid,
-            password: this.state.password
+            patientname: this.state.patientname
 
         };
-        console.log(docsignin);
-        window.location("/dochome");
+        console.log(viewprof);
+       
       
     }
 
@@ -58,11 +51,8 @@ export default class DocLogin extends Component {
                 </div>
 
                 <div>
-                <form onSubmit={this.onHandleSubmit} id="dloginform" method="post">
-                <div className="form-group">
-                        <label for="hospitalcode">Hospital Code</label>
-                        <input type="number" maxLength="6" minLength="6" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" className="form-control" id="dhc" value={this.state.hospitalcode} onChange={this.onChangeHospitalCode}/>
-                    </div>
+                <form onSubmit={this.onHandleSubmit} id="viewprofile" method="post">
+                
 
                     <div className="form-group">
                         <label for="docid">Doctor's ID</label>
@@ -70,8 +60,8 @@ export default class DocLogin extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" className="form-control" id="upass" value={this.state.password} onChange={this.onChangePassword}/>
+                        <label for="patient_name">Patient's Name</label>
+                        <input type="text" className="form-control" id="upass" value={this.state.patientname} onChange={this.onChangePatientName}/>
                     </div>
 
                     <button type="submit" className="btn btn-primary btn-lg" id="btn-signin">Login</button>
