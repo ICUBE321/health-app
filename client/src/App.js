@@ -13,6 +13,8 @@ import Profile from "./components/profile.component";
 import DocLogin from "./components/docsignin.component";
 import Signup from "./components/signup.component";
 import Detail from "./components/detail.component";
+import addAppointments from "./components/addAppointment.component";
+import addPrescription from "./components/addPrescription.component";
 //import useToken from "./useToken";
 
 //always show navbar on each component page
@@ -38,7 +40,9 @@ function App () {
                 <br/>
                 <Route path="/home" exact component={Homepage} />
                 <Route path="/appointments" exact component={Appointments}/>
+                <Route path="/addAppointment" exact component={addAppointments}/>
                 <Route path="/prescriptions" exact component={Prescriptions}/>
+                <Route path="/addPrescription" exact component={addPrescription}/>
                 <Route path="/signup" exact component={Signup}/>
                 <Route path="/login" exact component={Login}/>
                 <Route path="/findclinic" exact component={FindClinic}/>

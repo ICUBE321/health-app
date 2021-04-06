@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 
 export default class Login extends Component {
@@ -57,7 +57,11 @@ export default class Login extends Component {
         axios.post("/api/auth/login", user)
             .then(res => {
                 console.log(res.data);
-                localStorage.setItem('user', res.data.userId);
+                var items = [];
+                items.push(res.data.userId);
+                items.push(res.data.token);
+                items.push(res.data.firstname);
+                localStorage.setItem('user', JSON.stringify(items));
                 this.setState({
                     user : res.data,
                 });

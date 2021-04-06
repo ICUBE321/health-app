@@ -11,7 +11,7 @@ const detailSchema = new Schema({
     weight: { type: Number, required: true },
     bloodtype: { type: String, required: true },
     allergies: { type: String },
-    organdonor: { type: String, required: true },
+    donor: { type: String, required: true },
     healthprobs: { type: String } 
 }, {
     timestamps: true,

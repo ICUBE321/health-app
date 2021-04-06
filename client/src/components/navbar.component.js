@@ -33,6 +33,12 @@ export default class Navbar extends Component {
                             <Link to="/profile" className="nav-link">Profile</Link>
                         </li>
                         <li className="navbar-item">
+                            <Link to="/appointments" className="nav-link">Your Appointments</Link>
+                        </li>
+                        <li className="navbar-item">
+                            <Link to="/prescriptions" className="nav-link">Your Prescriptions</Link>
+                        </li>
+                        <li className="navbar-item">
                             <Link onClick={this.handleLogout} className="nav-link">Logout</Link>
                         </li>
                     </ul>

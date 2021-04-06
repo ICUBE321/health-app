@@ -59,7 +59,7 @@ export default class Detail extends Component {
 
     onChangeHeight(e){
         this.setState({
-            height: e.target.value
+            height: parseInt(e.target.value)
         });
     }
     onChangeOrganDonor(e){
@@ -71,7 +71,7 @@ export default class Detail extends Component {
 
     onChangeWeight(e){
         this.setState({
-            weight: e.target.value
+            weight: parseInt(e.target.value)
         });
     }
 
@@ -80,25 +80,37 @@ export default class Detail extends Component {
 
         const user = localStorage.getItem('user');
         console.log(user);
-        if(user) {
-            const details = {
-                DOB: this.state.DOB,
-                height: this.state.height,
-                weight: this.state.weight,
-                bloodtype: this.state.bloodtype,
-                allergies: this.state.allergies,
-                organ_donor: this.state.organ_donor,
-                healthprobs: this.state.healthprobs
-            };
+        const parsedUser = JSON.parse(user);
+        console.log(parsedUser);
+        if(parsedUser.length > 0) {
+            let headers = new Headers();
+            console.log("token: "+parsedUser[1]);
+            headers.append('Authorization', `Bearer ${parsedUser[1]}`);
+            headers.append('Content-Type', 'application/json');
+            axios.get(`/api/user/${parsedUser[0]}`, {headers: headers})
+                .then(res => {
+                    console.log(res);
+                    const cardno = res.data.healthcardno;
 
-            console.log(details);
-    
-            axios.post('/api/detail/add/'+user, details)
-                 .then(res => {
-                     console.log("in then clause");
-                     window.location = "/home";
-                    })
-                 .catch(error => console.log("Error while adding user details: " + error));
+                    const details = {
+                        healthcardno: cardno,
+                        DOB: this.state.DOB,
+                        height: this.state.height,
+                        weight: this.state.weight,
+                        bloodtype: this.state.bloodtype,
+                        allergies: this.state.allergies,
+                        organ_donor: this.state.organ_donor,
+                        healthprobs: this.state.healthprobs
+                    };
+                    console.log(details);
+
+                    axios.post('/api/detail/add/', details)
+                        .then(res => {
+                            console.log(res.data);
+                            window.location = "/home";
+                            })
+                        .catch(error => console.log("Error while adding user details: " + error));
+                }).catch(error => console.log("Error while fetching user data: "+error));
         }
     }
 

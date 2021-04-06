@@ -8,20 +8,20 @@ exports.getAppointments = (req, res) => {
 };
 
 exports.createAppointment = (req, res) => {
-    const date = req.body.date;
+    const healthcardno = req.body.healthcardno;
+    const date = Date.parse(req.body.date);
     const time = req.body.time;
-    const doctor = req.body.doctor;
 
     const newAppointment = new Appointment({
+        healthcardno,
         date,
         time,
-        doctor
     });
 
     newAppointment.save()
     .then(() => res.json('Appointment added!'))
     .catch(err => res.status(400).json('Error: ' + err));
-}
+};
 
 const Detail = require('../models/detail.model');
 
@@ -32,7 +32,9 @@ exports.getDetail = (req, res) => {
 };
 
 exports.createDetail = (req, res) => {
-    const DOB = req.body.DOB;
+    console.log("Gets to creatDetail");
+    const healthcardno = req.body.healthcardno;
+    const DOB = Date.parse(req.body.DOB);
     const height = req.body.height;
     const weight = req.body.weight;
     const bloodtype = req.body.bloodtype;
@@ -40,11 +42,8 @@ exports.createDetail = (req, res) => {
     const donor = req.body.organ_donor;
     const healthprobs = req.body.healthprobs;
 
-    const healthcardno = User.findById(req.params.id);
-    console.log(healthcardno);
-
     const newDetail = new Detail({
-        healthcard,
+        healthcardno,
         DOB,
         height,
         weight,
@@ -56,7 +55,7 @@ exports.createDetail = (req, res) => {
 
     newDetail.save()
     .then(() => res.json('Detail added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json('Error : ' + err));
 };
 
 const Doctor = require('../models/doctor.model');
@@ -102,20 +101,21 @@ exports.getPrescriptions = (req, res) => {
 };
 
 exports.createPrescription = (req, res) => {
-    const date = req.body.date;
+    const healthcardno = req.body.healthcardno;
+    const date = Date.parse(req.body.date);
     const ailment = req.body.ailment;
     const medicine = req.body.medicine;
     const volume = req.body.volume
-    const quantity = req.body.quantity;
-    const refill = req.body.refill;
-
+    const prescribed_quantity = req.body.prescribed_quantity; 
+    const refill = req.body.refill; 
+ 
     const newPrescription = new Prescription({
-        healthcard,
+        healthcardno,
         date,
         ailment,
         medicine,
         volume,
-        quantity,
+        prescribed_quantity,
         refill,
     });
 
@@ -126,12 +126,11 @@ exports.createPrescription = (req, res) => {
 
 const User = require('../models/user.model');
 
-const bcrypt = require('bcryptjs');
-
 exports.getUsers = (req, res) => {
-    User.find()
+    const id = req.params.id;
+    User.find({"_id": ObjectId(id)})
         .then(users => res.json(users))
-        .catch(err => res.status(400).json('Error: ' + err));
+        .catch(err => res.status(400).json('Error finding user with id: ' + err));
 };
 
 
