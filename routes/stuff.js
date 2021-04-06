@@ -6,23 +6,23 @@ const stuffCtrl = require('../controllers/stuff');
 const auth = require('../middleware/auth');
 
 //processing of routes
-router.get('/appointment/', auth, stuffCtrl.getAppointments);
-router.post('/appointment/add', auth, stuffCtrl.createAppointment);
+router.get('/appointment/', stuffCtrl.getAppointments);
+router.post('/appointment/add', stuffCtrl.createAppointment);
 
 
 //processing of routes
-router.get('/detail/:id', auth, stuffCtrl.getDetail);
-router.post('/detail/add', auth, stuffCtrl.createDetail);
+router.get('/detail/:id', stuffCtrl.getDetail);
+router.post('/detail/add', stuffCtrl.createDetail);
 
 //processing of routes
-router.get('/doctor/', auth, stuffCtrl.getDoctors);
-router.post('/doctor/add', auth, stuffCtrl.createDoctor);
+router.get('/doctor/', stuffCtrl.getDoctors);
+router.post('/doctor/add', stuffCtrl.createDoctor);
 
 //processing of routes
-router.get('/prescription/', auth, stuffCtrl.getPrescriptions);
-router.post('/prescription/add', auth, stuffCtrl.createPrescription);
+router.get('/prescription/', stuffCtrl.getPrescriptions);
+router.post('/prescription/add', stuffCtrl.createPrescription);
 
 //processing of routes
-router.get('/user/:id', auth, stuffCtrl.getUsers);
+router.get('/user/:id', stuffCtrl.getUsers);
 
 module.exports = router;

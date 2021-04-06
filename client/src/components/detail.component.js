@@ -85,9 +85,7 @@ export default class Detail extends Component {
         if(parsedUser.length > 0) {
             let headers = new Headers();
             console.log("token: "+parsedUser[1]);
-            headers.append('Authorization', `Bearer ${parsedUser[1]}`);
-            headers.append('Content-Type', 'application/json');
-            axios.get(`/api/user/${parsedUser[0]}`, {headers: headers})
+            axios.get(`/api/user/${parsedUser[0]}`)
                 .then(res => {
                     console.log(res);
                     const cardno = res.data.healthcardno;
