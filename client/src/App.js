@@ -19,7 +19,7 @@ import Detail from "./components/detail.component";
 //each component route path defined
 function App () {
 
-    cost [isAuthenticated, userHasAuthenticated] = useState(false);
+   //cost [isAuthenticated, userHasAuthenticated] = useState(false);
     
     // //call useState in custom hook(useToken) to trigger component 
     // //re-render

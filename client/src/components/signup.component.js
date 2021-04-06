@@ -1,7 +1,5 @@
-import React, { Component, useState } from 'react';
-import Login from "./login.component";
+import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 export default class Signup extends Component {
     constructor(props) {
@@ -66,11 +64,11 @@ export default class Signup extends Component {
             password:this.state.password
         };
 
-        axios.post('/user/add', reg)
-             .then(res => console.log(res.data));
-
-        window.location = "/details";
-
+        axios.post('/api/auth/signup', reg)
+             .then(res => {
+                window.location = "/login";
+                console.log(res.data)
+             }).catch(error => console.log("Error while signing up: " + error));
     }
 
     render() {

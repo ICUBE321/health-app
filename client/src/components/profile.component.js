@@ -1,29 +1,39 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Profile extends Component {
     constructor(props) {
         super(props);
 
         this.state={
+            user: {},
             details: []
         };
     }
 
     componentDidMount(){
-        this.userDetails();
+        const user = localStorage.getItem('user');
+        this.setState({ user: user });
+        console.log("Local storage state in profile page: ");
+        console.log(this.state.user);
+        //this.userDetails();
     }
 
-    userDetails =() =>{
-        axios.get('/detail/')
+    userDetails =() => {
+        const userDetails = localStorage.getItem('user');
+        if(userDetails){
+            console.log(this.state.user);
+            axios.get('/api/detail/' + userDetails.id)
              .then((response) => {
                  const data = response.data;
                  this.setState({details: data});
                  console.log("displaying user's profile");
              })
-             .catch(() => {
-                 alert("error displaying user's profile");
+             .catch((error) => { 
+                 alert("Error displaying user's profile: " + error);
              });
+        }
     }
 
     displayProfile = (details) => {
@@ -59,3 +69,4 @@ export default class Profile extends Component {
         )
     }
 }
+

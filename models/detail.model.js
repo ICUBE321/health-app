@@ -10,9 +10,9 @@ const detailSchema = new Schema({
     height: { type: Number, required: true },
     weight: { type: Number, required: true },
     bloodtype: { type: String, required: true },
-    allergies: { type: Array },
-    organdonor: { type: Boolean, required: true },
-    healthprobs: { type: Array } 
+    allergies: { type: String },
+    organdonor: { type: String, required: true },
+    healthprobs: { type: String } 
 }, {
     timestamps: true,
 });

@@ -10,7 +10,6 @@ require('dotenv').config();//to add environmental variables
 const app = express();
 const port = process.env.PORT || 5000;
 
-
 app.use(cors());
 app.use(express.json());
 
@@ -25,25 +24,12 @@ connection.once('open', () => {
 })
 
 //use established routes
-const appointmentRouter = require('./routes/appointment');
-const detailRouter = require('./routes/detail')
-const doctorRouter = require('./routes/doctor')
-const prescriptionRouter = require('./routes/prescription')
-const userRouter = require('./routes/user')
-
+const stuffRoutes = require('./routes/stuff');
+const userRoutes = require('./routes/user');
 
 //use routes to get frontend requests and process them
-app.use('/api/login', (req, res) => {
-  res.send({
-    token: 'test123'
-  });
-});
-app.use('/api/appointment', appointmentRouter);
-app.use('/api/detail', detailRouter);
-app.use('/api/doctor', doctorRouter);
-app.use('/api/prescription', prescriptionRouter);
-app.use('/api/user', userRouter);
-
+app.use('/api', stuffRoutes);
+app.use('/api/auth', userRoutes);
 
 //...other imports
 const path = require("path")

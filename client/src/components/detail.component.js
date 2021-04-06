@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+
 export default class Detail extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            user: '',
+            DOB: Date,
+            weight: Number,
+            height: Number,
+            bloodtype: "",
+            allergies: "",
+            organ_donor: "",
+            healthprobs: ""
+        }
 
         this.onChangeDOB= this.onChangeDOB.bind(this);
         this.onChangeWeight = this.onChangeWeight.bind(this);
@@ -13,16 +24,13 @@ export default class Detail extends Component {
         this.onChangeOrganDonor = this.onChangeOrganDonor.bind(this);
         this.onChangeHealthprobs = this.onChangeHealthprobs.bind(this);
         this.onHandleSubmit =  this.onHandleSubmit.bind(this);
+    }
 
-        this.state = {
-            DOB: '',
-            weight: '',
-            height: '',
-            bloodtype: [],
-            allergies: '',
-            organ_donor: [],
-            healthprobs: ''
-        }
+    componentDidMount(){
+        const user = localStorage.getItem('user');
+        this.setState({ user: user });
+        console.log("Local storage state in detail adding page: ");
+        console.log(this.state.user);
     }
 
     onChangeDOB(e){
@@ -70,20 +78,28 @@ export default class Detail extends Component {
     onHandleSubmit(e){
         e.preventDefault();
 
-        const details ={
-            DOB: this.state.DOB,
-            height: this.state.height,
-            weight: this.state.weight,
-            bloodtype: this.state.bloodtype,
-            allergies: this.state.allergies,
-            organ_donor: this.state.organ_donor,
-            healthprobs: this.state.healthprobs
-        };
+        const user = localStorage.getItem('user');
+        console.log(user);
+        if(user) {
+            const details = {
+                DOB: this.state.DOB,
+                height: this.state.height,
+                weight: this.state.weight,
+                bloodtype: this.state.bloodtype,
+                allergies: this.state.allergies,
+                organ_donor: this.state.organ_donor,
+                healthprobs: this.state.healthprobs
+            };
 
-        axios.post('/detail/add', details)
-             .then(res => console.log(res.data));
-            
-        window.location = "/home";
+            console.log(details);
+    
+            axios.post('/api/detail/add/'+user, details)
+                 .then(res => {
+                     console.log("in then clause");
+                     window.location = "/home";
+                    })
+                 .catch(error => console.log("Error while adding user details: " + error));
+        }
     }
 
     render() {
