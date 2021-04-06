@@ -11,7 +11,7 @@ router.post('/appointment/add', stuffCtrl.createAppointment);
 
 
 //processing of routes
-router.get('/detail/:id', stuffCtrl.getDetail);
+router.get('/detail', stuffCtrl.getDetail);
 router.post('/detail/add', stuffCtrl.createDetail);
 
 //processing of routes
@@ -23,6 +23,6 @@ router.get('/prescription/', stuffCtrl.getPrescriptions);
 router.post('/prescription/add', stuffCtrl.createPrescription);
 
 //processing of routes
-router.get('/user/:id', stuffCtrl.getUsers);
+router.get('/user', stuffCtrl.getUsers);
 
 module.exports = router;

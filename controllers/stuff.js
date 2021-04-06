@@ -26,13 +26,14 @@ exports.createAppointment = (req, res) => {
 const Detail = require('../models/detail.model');
 
 exports.getDetail = (req, res) => {
-    Detail.findById(req.params.id)
+    let healthcardno = req.query.healthcardno;
+    Detail.find({"healthcardno": healthcardno})
         .then(detail => res.json(detail))
         .catch(err => res.status(400).json('Error: ' + err));
 };
 
 exports.createDetail = (req, res) => {
-    console.log("Gets to creatDetail");
+    
     const healthcardno = req.body.healthcardno;
     const DOB = Date.parse(req.body.DOB);
     const height = req.body.height;
@@ -53,6 +54,7 @@ exports.createDetail = (req, res) => {
         healthprobs,
     });
 
+    console.log("New detail" + newDetail);
     newDetail.save()
     .then(() => res.json('Detail added!'))
     .catch(err => res.status(400).json('Error : ' + err));
@@ -127,8 +129,8 @@ exports.createPrescription = (req, res) => {
 const User = require('../models/user.model');
 
 exports.getUsers = (req, res) => {
-    const id = req.params.id;
-    User.find({"_id": ObjectId(id)})
+    let id = req.query.id;
+    User.find({"_id": id})
         .then(users => res.json(users))
         .catch(err => res.status(400).json('Error finding user with id: ' + err));
 };

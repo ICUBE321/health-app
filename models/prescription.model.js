@@ -5,13 +5,13 @@ const Schema = mongoose.Schema;
 
 //create new Prescription schema/document for the database
 const prescriptionSchema = new Schema({
-    healthcardno: { type: String, required: true, unique: true, trim: true, minlength: 3 },
+    healthcardno: { type: Number, required: true, unique: true, trim: true },
     date: { type: Date, required: true },
     ailment: { type: String, required: true },
     medicine: { type: String, required: true },
-    volume: { type: Number, required: true },
-    prescribed_quantity: { type: Number, required: true },
-    refill: { type: Boolean, required: true }
+    volume: { type: String, required: true },
+    prescribed_quantity: { type: String, required: true },
+    refill: { type: String, required: true }
 }, {
     timestamps: true,
 });

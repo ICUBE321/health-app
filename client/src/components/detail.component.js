@@ -6,7 +6,7 @@ export default class Detail extends Component {
         super(props);
 
         this.state = {
-            user: '',
+            user: localStorage.getItem('user'),
             DOB: Date,
             weight: Number,
             height: Number,
@@ -27,8 +27,6 @@ export default class Detail extends Component {
     }
 
     componentDidMount(){
-        const user = localStorage.getItem('user');
-        this.setState({ user: user });
         console.log("Local storage state in detail adding page: ");
         console.log(this.state.user);
     }
@@ -83,12 +81,13 @@ export default class Detail extends Component {
         const parsedUser = JSON.parse(user);
         console.log(parsedUser);
         if(parsedUser.length > 0) {
-            let headers = new Headers();
-            console.log("token: "+parsedUser[1]);
-            axios.get(`/api/user/${parsedUser[0]}`)
-                .then(res => {
+            axios.get("/api/user", {
+                params: {
+                    id: parsedUser[0]
+                }
+            }).then(res => {
                     console.log(res);
-                    const cardno = res.data.healthcardno;
+                    const cardno = res.data[0].healthcardno;
 
                     const details = {
                         healthcardno: cardno,

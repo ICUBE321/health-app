@@ -14,7 +14,7 @@ const initialValues = {
     amount: "",
     frequency: "",
     refills: "",
-    healthcardno: "", 
+    healthcardno: Number, 
 };
 
 const addPrescriptionSchema = Yup.object().shape({
@@ -24,7 +24,7 @@ const addPrescriptionSchema = Yup.object().shape({
     amount: Yup.string().required("Amount is required"),
     frequency: Yup.string().required("Frequency is required"),
     refills: Yup.string().required("Refills is required"),
-    healthcardno: Yup.string().required("Health Card number is required"),
+    healthcardno: Yup.number().required("Health Card number is required"),
     
 });
 
@@ -33,7 +33,7 @@ export default class addPrescription extends Component {
         super(props);
 
         this.state = {
-            healthcardno : "",
+            healthcardno : Number,
             date : new Date(),
             ailment : "",
             medicine : "",
@@ -71,7 +71,10 @@ export default class addPrescription extends Component {
                 };
 
                 axios.post('/api/prescription/add', newPrescription)
-                    .then(response => console.log(response.data))
+                    .then(response => {
+                        console.log(response.data);
+                        window.location = "/prescriptions";
+                    })
                     .catch(error => {
                         if (error.response){
                                 console.log("Error response: " + error.response.data);  
@@ -81,11 +84,6 @@ export default class addPrescription extends Component {
                                 console.log("Error message: " + error.message);  
                             }
                     })
-                
-                window.location = '/api/prescription';
-
-                 console.log(values);
-                 console.log(newPrescription);
                 }}>
                     {(formik) => {
                         const { errors, touched, isValid, dirty } = formik;
@@ -97,7 +95,7 @@ export default class addPrescription extends Component {
                                     id="healthcardno"
                                     className={errors.healthcardno && touched.healthcardno ?
                                     "input-error" : null}
-                                    type="text"
+                                    type="Number"
                                     placeholder="12345"
                                      />
                                      <ErrorMessage name="healthcardno" component="span" className="error"/>

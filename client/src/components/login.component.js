@@ -29,7 +29,7 @@ export default class Login extends Component {
         if (loggedInUser) {
             console.log("In go to details function: ");
             console.log(loggedInUser);
-            window.location = "/details";
+            window.location = "/profile";
         }
     }
 

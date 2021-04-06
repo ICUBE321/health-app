@@ -7,32 +7,43 @@ export default class Profile extends Component {
         super(props);
 
         this.state={
-            user: {},
+            user: localStorage.getItem('user'),
             details: []
         };
     }
 
     componentDidMount(){
-        const user = localStorage.getItem('user');
-        this.setState({ user: user });
         console.log("Local storage state in profile page: ");
         console.log(this.state.user);
-        //this.userDetails();
+        this.userDetails();
     }
 
-    userDetails =() => {
-        const userDetails = localStorage.getItem('user');
-        if(userDetails){
-            console.log(this.state.user);
-            axios.get('/api/detail/' + userDetails.id)
-             .then((response) => {
-                 const data = response.data;
-                 this.setState({details: data});
-                 console.log("displaying user's profile");
-             })
-             .catch((error) => { 
-                 alert("Error displaying user's profile: " + error);
-             });
+    userDetails = () => {
+        const userDetails = this.state.user;
+        const parsedUserDetails = JSON.parse(userDetails);
+        if(parsedUserDetails.length > 0){
+            const userId = parsedUserDetails[0];
+            axios.get("/api/user", {
+                params: {
+                    id: userId
+                }
+            }).then(res => {
+                const cardno = res.data[0].healthcardno;
+                //console.log("Healthcard number: "+cardno);
+                axios.get('/api/detail', {
+                    params: {
+                        healthcardno: cardno
+                    }
+                })
+                 .then((response) => {
+                     const data = response.data;
+                     this.setState({details: data});
+                     console.log(data);
+                 })
+                 .catch((error) => { 
+                     alert("Error displaying user's profile: " + error);
+                 });
+            })
         }
     }
 
@@ -45,7 +56,7 @@ export default class Profile extends Component {
                 <p>Weight: <h3>{detail.weight}</h3></p>
                 <p>Blood Type: <h3>{detail.bloodtype}</h3></p>
                 <p>Allergies: <h3>{detail.allergies}</h3></p>
-                <p>Organ Donor: <h3>{detail.organdonor}</h3></p>
+                <p>Organ Donor: <h3>{detail.donor}</h3></p>
                 <p>Other Health Problems: <h3>{detail.healthprobs}</h3></p>
             </div>
         ));
@@ -64,7 +75,7 @@ export default class Profile extends Component {
                         { this.displayProfile(this.state.details) }
                     </div>
 
-                    <Link to="/home" className="navbar-brand"><button type="submit" className="btn btn-primary btn-lg" id="btn_signup"> Back </button></Link>
+                    <Link to="/" className="navbar-brand"><button type="submit" className="btn btn-primary btn-lg" id="btn_signup"> Back </button></Link>
             </div>
         )
     }

@@ -2,6 +2,7 @@
 
 const express = require("express");
 const cors = require("cors"); 
+const bodyparser = require("body-parser");
 const mongoose = require('mongoose');//use mongoose for easy use of MongoDB 
 
 require('dotenv').config();//to add environmental variables
@@ -12,6 +13,7 @@ const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+app.use(bodyparser.json());
 
 const uri = process.env.ATLAS_URI;//database connection string
 

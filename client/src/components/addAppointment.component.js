@@ -9,14 +9,14 @@ import axios from "axios";
 
 const initialValues = {
     date: Date,
-    healthcardno: "",
+    healthcardno: Number,
     time: "",
 };
 
 const addAppointmentSchema = Yup.object().shape({
     date: Yup.date().required("Date is required"),
     time: Yup.string().required("Time is required"),
-    healthcardno: Yup.string().required("Health Card number is required"),
+    healthcardno: Yup.number().required("Health Card number is required"),
     
 });
 
@@ -25,7 +25,7 @@ export default class addAppointments extends Component {
         super(props);
 
         this.state = {
-            healthcardno : "",
+            healthcardno : Number,
             date : new Date(),
             time : "",
         }
@@ -51,7 +51,10 @@ export default class addAppointments extends Component {
                 };
 
                 axios.post('/api/appointment/add', newAppointment)
-                    .then(response => console.log(response.data))
+                    .then(response => {
+                        console.log(response.data);
+                        window.location = "/appointments"
+                    })
                     .catch(error => {
                         if (error.response){
                                 console.log("Error response: " + error.response.data);  
@@ -77,7 +80,7 @@ export default class addAppointments extends Component {
                                     id="healthcardno"
                                     className={errors.healthcardno && touched.healthcardno ?
                                     "input-error" : null}
-                                    type="text"
+                                    type="number"
                                     placeholder="12345"
                                      />
                                      <ErrorMessage name="healthcardno" component="span" className="error"/>
