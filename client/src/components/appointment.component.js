@@ -8,19 +8,54 @@ export default class Appointments extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {appointments: []};
+        this.state = {
+            appointments: [],
+            user: localStorage.getItem('user'),
+            doctor: localStorage.getItem('doctor'),
+        };
 
     }
 
     componentDidMount() {
-        axios.get('/api/appointment/')
+        const userDetails = this.state.user;
+        const parsedUserDetails = JSON.parse(userDetails);
+        const doctorDetails = this.state.doctor;
+        const parsedDoctorDetails = JSON.parse(doctorDetails);
+        if(parsedUserDetails && parsedUserDetails.length > 0) {
+            const userId = parsedUserDetails[0];
+            axios.get("/api/user", {
+                params: {
+                    id: userId
+                }
+            }).then(res => {
+                let cardno = res.data[0].healthcardno;
+                axios.get('/api/appointment/user', {
+                    params: {
+                        healthcardno: cardno
+                    }
+                }).then(response => {
+                    this.setState({ appointments: response.data });
+                })
+                .catch((error) => {
+                    console.log(error.response.data);
+                    window.alert(error.response.data);
+                })
+            })
+            .catch((error) => {
+                console.log(error.response.data);
+                window.alert(error.response.data);
+            })
+            
+        } else if(parsedDoctorDetails && parsedDoctorDetails.length > 0) {
+            axios.get('/api/appointment/')
             .then(response => {
                 this.setState({ appointments: response.data });
             })
             .catch((error) => {
-                console.log("Problem retrieving appointments!");
-                console.log(error);
+                console.log(error.response.data);
+                window.alert(error.response.data);
             })
+        }
     }
 
     render() {
@@ -29,7 +64,8 @@ export default class Appointments extends Component {
                 <div>
                     <Button variant="primary" onClick={() => {
                         window.location.href = "/addAppointment"
-                    }}>New Appointment</Button>
+                    }}
+                    disabled={!this.state.doctor}>New Appointment</Button>
                 </div>
                 <Accordion>
                     {this.state.appointments.map(({ healthcardno,

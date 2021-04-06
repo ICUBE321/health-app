@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 //create new Appointment schema/document for the database
 const appointmentSchema = new Schema({
-    healthcardno: { type: Number, required: true, unique: true, trim: true },
+    healthcardno: { type: Number, required: true, trim: true },
     date: { type: Date, required: true },
     time: { type: String, required: true },
 }, {

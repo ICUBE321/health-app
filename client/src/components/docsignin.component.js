@@ -1,30 +1,46 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 
 export default class DocLogin extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            doctor: '',
+            hospitalcode: Number,
+            docid: Number,
+            password: ''
+        };
+
         this.onChangeHospitalCode = this.onChangeHospitalCode.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
         this.onHandleSubmit = this.onHandleSubmit.bind(this);
         this.onChangeDocID = this.onChangeDocID.bind(this);
+    }
 
-        this.state = {
-            hospitalcode: '',
-            docid: '',
-            password: ''
-        };
+    componentDidMount() {
+        const doctor = localStorage.getItem('doctor');
+        this.setState({ doctor: doctor });
+        this.goToNext();
+    }
+
+    goToNext() {
+        const loggedInDoctor = localStorage.getItem('doctor');
+        if(loggedInDoctor) {
+            window.location = "/";
+            //window.alert("Logged in");
+        }
     }
 
     onChangeDocID(e){
         this.setState({
-            docid: e.target.value
+            docid: parseInt(e.target.value)
         });
     }
 
     onChangeHospitalCode(e){
         this.setState({
-            hospitalcode: e.target.value
+            hospitalcode: parseInt(e.target.value)
         });
     }
 
@@ -37,14 +53,33 @@ export default class DocLogin extends Component {
     onHandleSubmit(e){
         e.preventDefault();
 
-        const docsignin = {
+        const doctor = {
             hospitalcode: this.state.hospitalcode,
-            docid: this.state.docid,
-            password: this.state.password
-
+            doctorId: this.state.docid,
+            password: this.state.password,
         };
-    }
 
+        console.log(doctor);
+
+        axios.post("/api/doctor/auth/login", doctor)
+            .then(res => {
+                var items = [];
+                items.push(res.data.doctorRecordId);
+                items.push(res.data.token);
+                items.push(res.data.doctorId);
+                localStorage.setItem('doctor', JSON.stringify(items));
+                this.setState({
+                    doctor: res.data,
+                });
+                this.goToNext();
+            })
+                .catch(error => {
+                    console.log(error.response.data);
+                    window.alert(error.response.data);
+                })
+    };
+
+    //if no doctor is logged, in show form
     render() {
         return (
             <div>

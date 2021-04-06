@@ -66,8 +66,6 @@ export default class Login extends Component {
             window.alert(error.response.data);
         });
     };
-
-    //if there's a user show the message below
         
     //if no user, show login form
     render() {

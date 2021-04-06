@@ -7,6 +7,7 @@ export default class Navbar extends Component {
 
         this.state = {
             user: localStorage.getItem('user'),
+            doctor: localStorage.getItem('doctor'),
         };
     }
 
@@ -30,6 +31,25 @@ export default class Navbar extends Component {
                         </li>
                         <li className="navbar-item">
                             <Link to="/prescriptions" className="nav-link">Your Prescriptions</Link>
+                        </li>
+                        <li className="navbar-item">
+                            <Link onClick={this.handleLogout} className="nav-link">Logout</Link>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            )
+        } else if (this.state.doctor && this.state.doctor.length > 0){
+            return (
+                <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
+                <Link to="/" className="navbar-brand">Health App</Link>
+                <div className="collpase navbar-collapse">
+                    <ul className="navbar-nav mr-auto">
+                        <li className="navbar-item">
+                            <Link to="/appointments" className="nav-link">Patient Appointments</Link>
+                        </li>
+                        <li className="navbar-item">
+                            <Link to="/prescriptions" className="nav-link">Patient Prescriptions</Link>
                         </li>
                         <li className="navbar-item">
                             <Link onClick={this.handleLogout} className="nav-link">Logout</Link>

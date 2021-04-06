@@ -4,7 +4,21 @@ const Appointment = require('../models/appointment.model');
 exports.getAppointments = (req, res) => {
     Appointment.find()
         .then(appointments => res.json(appointments))
-        .catch(err => res.status(400).json('Error: ' + err));
+        .catch(err => {
+            console.log(err);
+            res.status(400).send('Error in getting appointments!');
+        });
+};
+
+exports.getUserAppointment = (req, res) => {
+    Appointment.find({"healthcardno": req.query.healthcardno})
+        .then(appointments => {
+            res.json(appointments);
+        })
+            .catch(error => {
+                console.log(error);
+                res.status(400).send('Error finding user appointments!');
+            });
 };
 
 exports.createAppointment = (req, res) => {
@@ -130,6 +144,17 @@ exports.getPrescriptions = (req, res) => {
     Prescription.find()
         .then(prescriptions => res.json(prescriptions))
         .catch(err => res.status(400).json('Error: ' + err));
+};
+
+exports.getUserPrescription = (req, res) => {
+    Prescription.find({"healthcardno": req.query.healthcardno})
+        .then(prescriptions => {
+            res.json(prescriptions);
+        })
+            .catch(error => {
+                console.log(error);
+                res.status(400).send('Error finding user prescriptions!');
+            });
 };
 
 exports.createPrescription = (req, res) => {

@@ -26,10 +26,12 @@ connection.once('open', () => {
 //use established routes
 const stuffRoutes = require('./routes/stuff');
 const userRoutes = require('./routes/user');
+const doctorRoutes = require('./routes/doctor');
 
 //use routes to get frontend requests and process them
 app.use('/api', stuffRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/api/doctor/auth', doctorRoutes);
 
 //...other imports
 const path = require("path")

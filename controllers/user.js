@@ -52,29 +52,17 @@ exports.login = (req, res, next) => {
                             { expiresIn: '24h' }
                         );
 
-                        console.log("User's token on log in: " + token);
-                        console.log("Logged in user's ID: "+ user._id);
-
                         res.status(200).json({
                             userId: user._id,
                             token: token,
                             firstname: user.firstname,
                         });
-                    })
-            .catch((error) => {
+                    }).catch((error) => {
                     console.log(error)
-                    res.status(500).json({
-                        error: error.message
-                    });
-                }
-            );
-        }
-    ).catch(
-        (error) => {
+                    res.status(500).send("Error checking user password!");
+                });
+        }).catch((error) => {
             console.log(error)
-            res.status(500).json({
-                error: error.message
-            });
-        }
-    );
+            res.status(500).send("Error finding user in database!");
+        });
 };
