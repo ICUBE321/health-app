@@ -29,7 +29,6 @@ export default class Profile extends Component {
                 }
             }).then(res => {
                 const cardno = res.data[0].healthcardno;
-                //console.log("Healthcard number: "+cardno);
                 axios.get('/api/detail', {
                     params: {
                         healthcardno: cardno
@@ -74,7 +73,7 @@ export default class Profile extends Component {
                     <div>
                         { this.displayProfile(this.state.details) }
                     </div>
-
+                    <Link to="/details" className="navbar-brand"><button type="submit" className="btn btn-primary btn-lg" id="btn_signup"> Edit </button></Link>
                     <Link to="/" className="navbar-brand"><button type="submit" className="btn btn-primary btn-lg" id="btn_signup"> Back </button></Link>
             </div>
         )

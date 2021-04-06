@@ -7,13 +7,15 @@ export default class Detail extends Component {
 
         this.state = {
             user: localStorage.getItem('user'),
+            edit: false,
             DOB: Date,
             weight: Number,
             height: Number,
             bloodtype: "",
             allergies: "",
             organ_donor: "",
-            healthprobs: ""
+            healthprobs: "",
+            details: []
         }
 
         this.onChangeDOB= this.onChangeDOB.bind(this);
@@ -29,6 +31,48 @@ export default class Detail extends Component {
     componentDidMount(){
         console.log("Local storage state in detail adding page: ");
         console.log(this.state.user);
+        this.userDetails();
+    }
+
+    userDetails = () => {
+        const userDetails = this.state.user;
+        const parsedUserDetails = JSON.parse(userDetails);
+        if(parsedUserDetails.length > 0){
+            const userId = parsedUserDetails[0];
+            axios.get("/api/user", {
+                params: {
+                    id: userId
+                }
+            }).then(res => {
+                const cardno = res.data[0].healthcardno;
+                axios.get('/api/detail', {
+                    params: {
+                        healthcardno: cardno
+                    }
+                })
+                 .then((response) => {
+                     const data = response.data;
+                     this.setState({details: data});
+                     if(this.state.details.length > 0) {
+                         this.setState({
+                             edit: true,
+                             DOB: this.state.details.DOB,
+                            weight: this.state.details.weight,
+                            height: this.state.details.height,
+                            bloodtype: this.state.details.bloodtype,
+                            allergies: this.state.details.allergies,
+                            organ_donor: this.state.details.donor,
+                            healthprobs: this.state.details.healthprobs,
+                            });
+
+                     }
+                     console.log(data);
+                 })
+                 .catch((error) => { 
+                     alert("Error displaying user's profile: " + error);
+                 });
+            })
+        }
     }
 
     onChangeDOB(e){

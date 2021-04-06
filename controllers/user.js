@@ -5,28 +5,32 @@ const User = require('../models/user.model');
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10).then(
         (hash) => {
-            const healthcardno = req.body.healthcardno;
-            const firstname = req.body.firstname;
-            const lastname = req.body.lastname;
-            const email = req.body.email; 
+            User.findOne({ healthcardno: req.body.healthcardno })
+                .then((user) => {
+                    if (user) {
+                        return res.status(401).json({
+                            error: new Error('Healthcard number already in use!')
+                        });
+                    }
+                    const healthcardno = req.body.healthcardno;
+                    const firstname = req.body.firstname;
+                    const lastname = req.body.lastname;
+                    const email = req.body.email; 
 
-            const newUser = new User({
-                healthcardno,
-                firstname,
-                lastname,
-                email,
-                password: hash,
-            });
+                    const newUser = new User({
+                        healthcardno,
+                        firstname,
+                        lastname,
+                        email,
+                        password: hash,
+                    });
 
-            //console.log('User content on signup: ' + newUser);
-
-            newUser.save()
-                .then(() => {
-                    res.status(201).json({ message: 'User added successfully!' });
-                })
-                .catch(err => res.status(500).json('Error: ' + err));
-        }
-    )
+                    newUser.save().then(() => {
+                            res.status(201).json({ message: 'User added successfully!' });
+                        }).catch(err => res.status(500).json('Error: ' + err));
+                    }
+                )}
+    );
 };
 
 exports.login = (req, res, next) => {

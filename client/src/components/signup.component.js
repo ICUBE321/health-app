@@ -68,7 +68,9 @@ export default class Signup extends Component {
              .then(res => {
                 window.location = "/login";
                 console.log(res.data)
-             }).catch(error => console.log("Error while signing up: " + error));
+             }).catch(error => {
+                 console.log("Error while signing up: " + error);
+                });
     }
 
     render() {

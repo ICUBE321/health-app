@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { AppContext } from "./libs/contextLib";
 import Navbar from "./components/navbar.component"
 import Appointments from "./components/appointment.component";
 import Homepage from "./components/homepage.component";
