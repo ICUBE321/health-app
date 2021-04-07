@@ -9,14 +9,14 @@ import axios from "axios";
 
 const initialValues = {
     date: Date,
-    healthcardno: Number,
+    healthcardno: "",
     time: "",
 };
 
 const addAppointmentSchema = Yup.object().shape({
     date: Yup.date().required("Date is required"),
     time: Yup.string().required("Time is required"),
-    healthcardno: Yup.number().required("Health Card number is required"),
+    healthcardno: Yup.string().required("Health Card number is required").matches(/^[1-9]{10}[A-Z]{2}$/).length(12, 'Must be 12 characters long'),
     
 });
 
@@ -25,7 +25,7 @@ export default class addAppointments extends Component {
         super(props);
 
         this.state = {
-            healthcardno : Number,
+            healthcardno : "",
             date : new Date(),
             time : "",
         }
@@ -80,8 +80,8 @@ export default class addAppointments extends Component {
                                     id="healthcardno"
                                     className={errors.healthcardno && touched.healthcardno ?
                                     "input-error" : null}
-                                    type="number"
-                                    placeholder="12345"
+                                    type="text"
+                                    placeholder="1234567893CA"
                                      />
                                      <ErrorMessage name="healthcardno" component="span" className="error"/>
                                 </div>

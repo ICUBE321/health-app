@@ -14,7 +14,7 @@ const initialValues = {
     amount: "",
     frequency: "",
     refills: "",
-    healthcardno: Number, 
+    healthcardno: "", 
 };
 
 const addPrescriptionSchema = Yup.object().shape({
@@ -24,7 +24,7 @@ const addPrescriptionSchema = Yup.object().shape({
     amount: Yup.string().required("Amount is required"),
     frequency: Yup.string().required("Frequency is required"),
     refills: Yup.string().required("Refills is required"),
-    healthcardno: Yup.number().required("Health Card number is required"),
+    healthcardno: Yup.string().required("Health Card number is required").matches(/^[1-9]{10}[A-Z]{2}$/).length(12, 'Must be 12 characters long'),
     
 });
 
@@ -33,7 +33,7 @@ export default class addPrescription extends Component {
         super(props);
 
         this.state = {
-            healthcardno : Number,
+            healthcardno : "",
             date : new Date(),
             ailment : "",
             medicine : "",
@@ -95,8 +95,8 @@ export default class addPrescription extends Component {
                                     id="healthcardno"
                                     className={errors.healthcardno && touched.healthcardno ?
                                     "input-error" : null}
-                                    type="Number"
-                                    placeholder="12345"
+                                    type="text"
+                                    placeholder="1234567893CA"
                                      />
                                      <ErrorMessage name="healthcardno" component="span" className="error"/>
                                 </div>

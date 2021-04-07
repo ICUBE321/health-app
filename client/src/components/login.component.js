@@ -7,7 +7,7 @@ export default class Login extends Component {
 
         this.state = {
             user: '',
-            username: Number,
+            username: "",
             password: '',
         };
 
@@ -31,7 +31,7 @@ export default class Login extends Component {
 
     onChangeUsername(e) {
         this.setState({
-            username: parseInt(e.target.value)
+            username: e.target.value
         });
     }
 
@@ -79,9 +79,10 @@ export default class Login extends Component {
                 <form onSubmit={this.handlSubmit} id="uloginform" method="post">
                     <div className="form-group">
                         <label for="hcn">Healthcard Number</label>
-                        <input type="number" maxLength="10" 
-                            minLength="10" 
-                            pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" 
+                        <input type="text" maxLength="12" 
+                            minLength="12" 
+                            pattern="^[1-9]{10}[A-Z]{2}$"
+                            placeholder="1234567890CA" 
                             className="form-control" id="uhcn"
                             value={this.state.username}
                             onChange={this.onChangeUsername}/>

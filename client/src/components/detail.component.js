@@ -7,7 +7,7 @@ export default class Detail extends Component {
 
         this.state = {
             user: localStorage.getItem('user'),
-            healthcardno: Number,
+            healthcardno: "",
             edit: false,
             DOB: Date,
             weight: Number,
