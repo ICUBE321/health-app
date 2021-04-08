@@ -57,6 +57,10 @@ export default class Prescriptions extends Component {
         }
     }
 
+    editPrescription(id) {
+        window.location = "/addPrescription/edit/"+id;
+    }
+
     deletePrescription(id) {
         axios.delete('/api/prescription/delete', {
             params: {
@@ -99,10 +103,10 @@ export default class Prescriptions extends Component {
                                                                         Medicine: {medicine}
                                                                     </Accordion.Toggle>
                                                                     <div>
-                                                                        <Link to={"/addPrescription/edit/"+_id}  variant="primary" 
-                                                                            disabled={!this.state.doctor}>
-                                                                                Edit
-                                                                        </Link>
+                                                                    <Button onClick={() => { this.editPrescription(_id) }} 
+                                                                                disabled={!this.state.doctor}>
+                                                                            Edit
+                                                                        </Button> 
                                                                         <Button variant="danger" 
                                                                             disabled={!this.state.doctor}
                                                                             onClick={() => { this.deletePrescription(_id) }}>

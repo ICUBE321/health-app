@@ -58,6 +58,10 @@ export default class Appointments extends Component {
         }
     }
 
+    editAppointment(id) {
+        window.location = "/addAppointment/edit/"+id;
+    }
+
     deleteAppointment(id) {
         axios.delete('/api/appointment/delete', {
             params: {
@@ -96,10 +100,10 @@ export default class Appointments extends Component {
                                                                         Date: {date}
                                                                     </Accordion.Toggle>
                                                                     <div>
-                                                                        <Link to={"/addAppointment/edit/"+_id}  variant="primary" 
-                                                                            disabled={!this.state.doctor}>
-                                                                                Edit
-                                                                        </Link>
+                                                                        <Button onClick={() => { this.editAppointment(_id) }} 
+                                                                                disabled={!this.state.doctor}>
+                                                                            Edit
+                                                                        </Button> 
                                                                         <Button variant="danger" 
                                                                             disabled={!this.state.doctor}
                                                                             onClick={() => { this.deleteAppointment(_id) }}>
