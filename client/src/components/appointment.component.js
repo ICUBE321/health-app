@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Accordion, Card, Button } from 'react-bootstrap';
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default class Appointments extends Component {
     constructor(props) {
@@ -13,7 +14,6 @@ export default class Appointments extends Component {
             user: localStorage.getItem('user'),
             doctor: localStorage.getItem('doctor'),
         };
-
     }
 
     componentDidMount() {
@@ -58,6 +58,23 @@ export default class Appointments extends Component {
         }
     }
 
+    deleteAppointment(id) {
+        axios.delete('/api/appointment/delete', {
+            params: {
+                id: id
+            }
+        }).then((response) => {
+            console.log(response.data);
+        }).catch(error => {
+            console.log(error.response.data);
+            window.alert(error.response.data);
+        });
+
+        this.setState({
+            appointments: this.state.appointments.filter(el => el._id !== id)
+        })
+    }
+
     render() {
         return (
             <div>
@@ -71,12 +88,24 @@ export default class Appointments extends Component {
                     {this.state.appointments.map(({ healthcardno,
                                                         date,
                                                         time,
+                                                        _id,
                                                          }) => (
                                                              <Card>
                                                                  <Card.Header>
                                                                     <Accordion.Toggle eventKey={healthcardno, date, time}>
                                                                         Date: {date}
                                                                     </Accordion.Toggle>
+                                                                    <div>
+                                                                        <Link to={"/addAppointment/edit/"+_id}  variant="primary" 
+                                                                            disabled={!this.state.doctor}>
+                                                                                Edit
+                                                                        </Link>
+                                                                        <Button variant="danger" 
+                                                                            disabled={!this.state.doctor}
+                                                                            onClick={() => { this.deleteAppointment(_id) }}>
+                                                                                Delete
+                                                                        </Button>
+                                                                    </div>
                                                                  </Card.Header>
                                                                  <Accordion.Collapse eventKey={healthcardno, date, time}>
                                                                     <Card.Body>

@@ -7,12 +7,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 
-const initialValues = {
-    date: Date,
-    healthcardno: "",
-    time: "",
-};
-
 const addAppointmentSchema = Yup.object().shape({
     date: Yup.date().required("Date is required"),
     time: Yup.string().required("Time is required"),
@@ -28,12 +22,47 @@ export default class addAppointments extends Component {
             healthcardno : "",
             date : new Date(),
             time : "",
+            edit: false,
+            appointmentId: ""
+        }
+
+    }
+
+    componentDidMount() {
+        this.getAppointmentDetails();
+    }
+
+    getAppointmentDetails = () => {
+        const appointmentId = this.props.match.params.id;
+        if(appointmentId) {
+            axios.get("/api/appointment/single", {
+                params: {
+                    id: appointmentId
+                }
+            }).then((response) => {
+                const data = response.data[0];
+                this.setState({
+                    edit: true,
+                    healthcardno: data.healthcardno,
+                    date: data.date,
+                    time: data.time,
+                    appointmentId: appointmentId,
+                })
+            }).catch(error => {
+                console.log(error.response.data);
+            })
         }
     }
 
     render() {
         return (
-            <Formik initialValues={initialValues}
+            <Formik 
+            enableReinitialize
+            initialValues={{
+                healthcardno: this.state.healthcardno,
+                date: this.state.date,
+                time: this.state.time
+            }}
              validationSchema={addAppointmentSchema} 
              onSubmit={(values) => {
 
@@ -50,25 +79,30 @@ export default class addAppointments extends Component {
                     time : this.state.time,
                 };
 
-                axios.post('/api/appointment/add', newAppointment)
-                    .then(response => {
+                if(this.state.edit) {
+                    axios.post('/api/appointment/edit', newAppointment, {
+                        params: {
+                            id: this.state.appointmentId
+                        }
+                    }).then((response) => {
                         console.log(response.data);
-                        window.location = "/appointments"
                     })
                     .catch(error => {
-                        if (error.response){
-                                console.log("Error response: " + error.response.data);  
-                            }else if(error.request){
-                                console.log("Error request: " + error.request);  
-                            }else if(error.message){
-                                console.log("Error message: " + error.message);  
-                            }
+                        console.log(error.response.data);
+                        window.alert(error.response.data);
                     })
+                } else {
+                    axios.post('/api/appointment/add', newAppointment)
+                    .then(response => {
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        console.log(error.response.data);
+                        window.alert(error.response.data);
+                    })
+                }
+                window.location = "/appointments"
                 
-                // window.location = '/api/appointment';
-
-                 console.log(values);
-                 console.log(newAppointment);
                 }}>
                     {(formik) => {
                         const { errors, touched, isValid, dirty } = formik;
@@ -82,6 +116,7 @@ export default class addAppointments extends Component {
                                     "input-error" : null}
                                     type="text"
                                     placeholder="1234567893CA"
+                                    disabled={this.state.edit}
                                      />
                                      <ErrorMessage name="healthcardno" component="span" className="error"/>
                                 </div>
@@ -110,7 +145,13 @@ export default class addAppointments extends Component {
                                     className={!(dirty && isValid) ? "disabled-btn" : ""}
                                     disabled={!(dirty && isValid)}>
                                         Submit
-                                    </Button>
+                                </Button>
+                                <Button variant="danger" 
+                                    type="button"
+                                    onClick={() => { window.location = "/appointments"; }}
+                                    >
+                                        Cancel
+                                </Button>
                             </Form>
                         )
                     }}

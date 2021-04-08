@@ -7,23 +7,13 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 
-const initialValues = {
-    date: Date,
-    medicine: "",
-    ailment: "",
-    amount: "",
-    frequency: "",
-    refills: "",
-    healthcardno: "", 
-};
-
 const addPrescriptionSchema = Yup.object().shape({
     date: Yup.date().required("Date is required"),
     medicine: Yup.string().required("Medicine is required"),
     ailment: Yup.string().required("Ailment is required"),
-    amount: Yup.string().required("Amount is required"),
-    frequency: Yup.string().required("Frequency is required"),
-    refills: Yup.string().required("Refills is required"),
+    volume: Yup.string().required("Amount is required"),
+    prescribed_quantity: Yup.string().required("Frequency is required"),
+    refill: Yup.string().required("Refills is required"),
     healthcardno: Yup.string().required("Health Card number is required").matches(/^[1-9]{10}[A-Z]{2}$/).length(12, 'Must be 12 characters long'),
     
 });
@@ -38,14 +28,56 @@ export default class addPrescription extends Component {
             ailment : "",
             medicine : "",
             volume : "",
-            quantity : "", 
+            prescribed_quantity : "", 
             refill : "",
+            edit: false,
+            prescriptionId: ""
+        }
+    }
+
+    componentDidMount() {
+        this.getPrescriptionDetails();
+    }
+
+    getPrescriptionDetails = () => {
+        const prescriptionId = this.props.match.params.id;
+        if(prescriptionId) {
+            axios.get("/api/prescription/single", {
+                params: {
+                    id: prescriptionId
+                }
+            }).then((response) => {
+                const data = response.data[0];
+                this.setState({
+                    edit: true,
+                    healthcardno: data.healthcardno,
+                    date: data.date,
+                    ailment : data.ailment,
+                    medicine : data.medicine,
+                    volume : data.volume,
+                    prescribed_quantity : data.prescribed_quantity, 
+                    refill : data.refill,
+                    prescriptionId: prescriptionId,
+                })
+            }).catch(error => {
+                console.log(error.response.data);
+            })
         }
     }
 
     render() {
         return (
-            <Formik initialValues={initialValues}
+            <Formik 
+            enableReinitialize
+            initialValues={{
+                healthcardno: this.state.healthcardno,
+                date: this.state.date,
+                ailment: this.state.ailment,
+                medicine: this.state.medicine,
+                volume: this.state.volume,
+                prescribed_quantity: this.state.prescribed_quantity,
+                refill: this.state.refill
+            }}
              validationSchema={addPrescriptionSchema} 
              onSubmit={(values) => {
 
@@ -54,9 +86,9 @@ export default class addPrescription extends Component {
                     date : values.date,
                     ailment : values.ailment,
                     medicine : values.medicine,
-                    volume : values.frequency,
-                    quantity : values.amount, 
-                    refill : values.refills,
+                    volume : values.volume,
+                    prescribed_quantity : values.prescribed_quantity, 
+                    refill : values.refill,
                 })
 
                 //make up new prescription using values
@@ -66,24 +98,34 @@ export default class addPrescription extends Component {
                     ailment : this.state.ailment,
                     medicine : this.state.medicine,
                     volume : this.state.volume,
-                    prescribed_quantity : this.state.quantity, 
+                    prescribed_quantity : this.state.prescribed_quantity, 
                     refill : this.state.refill,
                 };
 
-                axios.post('/api/prescription/add', newPrescription)
-                    .then(response => {
+                if(this.state.edit) {
+                    axios.post('/api/prescription/edit', newPrescription, {
+                        params: {
+                            id: this.state.prescriptionId
+                        }
+                    }).then((response) => {
                         console.log(response.data);
-                        window.location = "/prescriptions";
                     })
                     .catch(error => {
-                        if (error.response){
-                                console.log("Error response: " + error.response.data);  
-                            }else if(error.request){
-                                console.log("Error request: " + error.request);  
-                            }else if(error.message){
-                                console.log("Error message: " + error.message);  
-                            }
+                        console.log(error.response.data);
+                        window.alert(error.response.data);
                     })
+                } else {
+                    axios.post('/api/prescription/add', newPrescription)
+                    .then(response => {
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        console.log(error.response.data);
+                        window.alert(error.response.data);
+                    })
+                }
+                window.location = "/prescriptions";
+
                 }}>
                     {(formik) => {
                         const { errors, touched, isValid, dirty } = formik;
@@ -97,6 +139,7 @@ export default class addPrescription extends Component {
                                     "input-error" : null}
                                     type="text"
                                     placeholder="1234567893CA"
+                                    disabled={this.state.edit}
                                      />
                                      <ErrorMessage name="healthcardno" component="span" className="error"/>
                                 </div>
@@ -134,43 +177,49 @@ export default class addPrescription extends Component {
                                 </div>
                                 <div>
                                 <label>Dispensed Amount</label>
-                                <Field name="amount"
-                                    id="amount"
-                                    className={errors.amount && touched.amount ?
+                                <Field name="volume"
+                                    id="volume"
+                                    className={errors.volume && touched.volume ?
                                     "input-error" : null}
                                     type="text"
                                     placeholder="30-thirty"
                                      />
-                                     <ErrorMessage name="amount" component="span" className="error"/>
+                                     <ErrorMessage name="volume" component="span" className="error"/>
                                 </div>
                                 <div>
                                 <label>Prescribed Frequency</label>
-                                <Field name="frequency"
-                                    id="frequency"
-                                    className={errors.frequency && touched.frequency ?
+                                <Field name="prescribed_quantity"
+                                    id="prescribed_quantity"
+                                    className={errors.prescribed_quantity && touched.prescribed_quantity ?
                                     "input-error" : null}
                                     type="text"
                                     placeholder="daily"
                                      />
-                                     <ErrorMessage name="frequency" component="span" className="error"/>
+                                     <ErrorMessage name="prescribed_quantity" component="span" className="error"/>
                                 </div>
                                 <div>
                                 <label>Refills</label>
-                                <Field name="refills"
-                                    id="refills"
-                                    className={errors.refills && touched.refills ?
+                                <Field name="refill"
+                                    id="refill"
+                                    className={errors.refill && touched.refill ?
                                     "input-error" : null}
                                     type="text" 
                                     placeholder="11 refills"
                                      />
-                                     <ErrorMessage name="refills" component="span" className="error"/>
+                                     <ErrorMessage name="refill" component="span" className="error"/>
                                 </div>
                                 <Button variant="primary" 
                                     type="submit"
                                     className={!(dirty && isValid) ? "disabled-btn" : ""}
                                     disabled={!(dirty && isValid)}>
                                         Submit
-                                    </Button>
+                                </Button>
+                                <Button variant="danger" 
+                                    type="button"
+                                    onClick={() => { window.location = "/prescriptions"; }}
+                                    >
+                                        Cancel
+                                </Button>
                             </Form>
                         )
                     }}

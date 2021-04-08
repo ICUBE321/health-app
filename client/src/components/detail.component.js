@@ -56,8 +56,6 @@ export default class Detail extends Component {
                     }
                 }).then((response) => {
                      const data = response.data[0];
-                    //  console.log(data);
-                    //  console.log(data.healthcardno.length);
                      this.setState({details: data});
                      if(data.healthcardno > 0) {
                          this.setState({

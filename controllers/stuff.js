@@ -21,6 +21,17 @@ exports.getUserAppointment = (req, res) => {
             });
 };
 
+exports.getSingleAppointment = (req, res) => {
+    Appointment.find({"_id": req.query.id})
+        .then(appointments => {
+            res.json(appointments);
+        })
+            .catch(error => {
+                console.log(error);
+                res.status(400).send('Error finding single appointment!');
+            });
+};
+
 exports.createAppointment = (req, res) => {
     const healthcardno = req.body.healthcardno;
     const date = Date.parse(req.body.date);
@@ -35,6 +46,42 @@ exports.createAppointment = (req, res) => {
     newAppointment.save()
     .then(() => res.json('Appointment added!'))
     .catch(err => res.status(400).json('Error: ' + err));
+};
+
+exports.editAppointment = (req, res) => {
+    let appointmentId = req.query.id;
+    let healthcardno = req.body.healthcardno;
+    let date = Date.parse(req.body.date);
+    let time = req.body.time;
+    var query = { "_id": appointmentId };
+    var newAppointment = {
+        healthcardno,
+        date,
+        time,
+    };
+    Appointment.updateOne(query, { $set: newAppointment }, function(error, result) {    
+        if(error) {
+            console.log(error);
+        } else {
+            console.log(result);
+        }
+    }).then(() => res.json('Appointment updated!'))
+        .catch(error => {
+                    console.log(error);
+                    res.status(400).send('Error updating appointment!');
+                });
+};
+
+exports.deleteAppointment = (req, res) => {
+    let appointmentId = req.query.id;
+    Appointment.findByIdAndDelete(appointmentId)
+        .then(() => {
+            res.json('Appointment deleted!');
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(400).send('Error deleting appointment!');
+        })
 };
 
 const Detail = require('../models/detail.model');
@@ -78,9 +125,7 @@ exports.createDetail = (req, res) => {
 };
 
 exports.editDetail = (req, res) => {
-    console.log("Request body: "+req.body.weight);
     let cardno = req.query.healthcardno;
-    console.log("Card number: "+ cardno);
     var query = { "healthcardno": cardno };
     var newDetail = {
         DOB : Date.parse(req.body.DOB),
@@ -179,6 +224,61 @@ exports.createPrescription = (req, res) => {
     newPrescription.save()
     .then(() => res.json('Prescription added!'))
     .catch(err => res.status(400).json('Error: ' + err));
+};
+
+exports.editPrescription = (req, res) => {
+    let prescriptionId = req.query.id;
+    let healthcardno = req.body.healthcardno;
+    let date = Date.parse(req.body.date);
+    let ailment = req.body.time;
+    let medicine = req.body.medicine;
+    let volume = req.body.volume
+    let prescribed_quantity = req.body.prescribed_quantity; 
+    let refill = req.body.refill; 
+    var query = { "_id": prescriptionId };
+    var newPrescription = {
+        healthcardno,
+        date,
+        ailment,
+        medicine,
+        volume,
+        prescribed_quantity,
+        refill,
+    };
+    Prescription.updateOne(query, { $set: newPrescription }, function(error, result) {    
+        if(error) {
+            console.log(error);
+        } else {
+            console.log(result);
+        }
+    }).then(() => res.json('Prescription updated!'))
+        .catch(error => {
+                    console.log(error);
+                    res.status(400).send('Error updating prescription!');
+                });
+};
+
+exports.getSinglePrescription = (req, res) => {
+    Prescription.find({"_id": req.query.id})
+        .then(prescriptions => {
+            res.json(prescriptions);
+        })
+            .catch(error => {
+                console.log(error);
+                res.status(400).send('Error finding single prescription!');
+            });
+};
+
+exports.deletePrescription = (req, res) => {
+    let prescriptionId = req.query.id;
+    Prescription.findByIdAndDelete(prescriptionId)
+        .then(() => {
+            res.json('Prescription deleted!');
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(400).send('Error deleting prescription!');
+        })
 };
 
 const User = require('../models/user.model');

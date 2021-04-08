@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { Component } from 'react';
 import { Accordion, Card, Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 
 export default class Prescriptions extends Component {
     constructor(props) {
@@ -12,7 +13,6 @@ export default class Prescriptions extends Component {
             user: localStorage.getItem('user'),
             doctor: localStorage.getItem('doctor'),
         };
-
     }
 
     componentDidMount() {
@@ -57,6 +57,23 @@ export default class Prescriptions extends Component {
         }
     }
 
+    deletePrescription(id) {
+        axios.delete('/api/prescription/delete', {
+            params: {
+                id: id
+            }
+        }).then((response) => {
+            console.log(response.data);
+        }).catch(error => {
+            console.log(error.response.data);
+            window.alert(error.response.data);
+        });
+
+        this.setState({
+            prescriptions: this.state.prescriptions.filter(el => el._id !== id)
+        })
+    }
+
     render() {
         return (
             <div>
@@ -73,13 +90,25 @@ export default class Prescriptions extends Component {
                                                         medicine,
                                                         volume,
                                                         prescribed_quantity,
-                                                        refill
+                                                        refill,
+                                                        _id,
                                                          }) => (
                                                              <Card>
                                                                  <Card.Header>
                                                                     <Accordion.Toggle eventKey={healthcardno, medicine, ailment}>
                                                                         Medicine: {medicine}
                                                                     </Accordion.Toggle>
+                                                                    <div>
+                                                                        <Link to={"/addPrescription/edit/"+_id}  variant="primary" 
+                                                                            disabled={!this.state.doctor}>
+                                                                                Edit
+                                                                        </Link>
+                                                                        <Button variant="danger" 
+                                                                            disabled={!this.state.doctor}
+                                                                            onClick={() => { this.deletePrescription(_id) }}>
+                                                                                Delete
+                                                                        </Button> 
+                                                                    </div>
                                                                  </Card.Header>
                                                                  <Accordion.Collapse eventKey={healthcardno, medicine, ailment}>
                                                                     <Card.Body>

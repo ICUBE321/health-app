@@ -28,8 +28,10 @@ function App () {
                 <Route path="/" exact component={Homepage} />
                 <Route path="/appointments" exact component={Appointments}/>
                 <Route path="/addAppointment" exact component={addAppointments}/>
+                <Route path="/addAppointment/edit/:id" exact component={addAppointments}/>
                 <Route path="/prescriptions" exact component={Prescriptions}/>
                 <Route path="/addPrescription" exact component={addPrescription}/>
+                <Route path="/addPrescription/edit/:id" exact component={addPrescription}/>
                 <Route path="/signup" exact component={Signup}/>
                 <Route path="/login" exact component={Login}/>
                 <Route path="/dlogin" exact component={DocLogin}/>
@@ -37,8 +39,6 @@ function App () {
                 <Route path="/profile" exact component={Profile}/>
                 <Route path="/findclinic" exact component={FindClinic}/>
                 <Route path="/findlab" exact component={FindLab}/>
-                
-
             </div>
         </Router>
     );
