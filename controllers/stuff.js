@@ -283,9 +283,18 @@ exports.deletePrescription = (req, res) => {
 
 const User = require('../models/user.model');
 
-exports.getUsers = (req, res) => {
+exports.getUser = (req, res) => {
     let id = req.query.id;
     User.find({"_id": id})
+        .then(users => res.json(users))
+        .catch(err => {
+            console.log(err);
+            res.status(400).send('Error finding user with id');
+        });
+};
+
+exports.getUsers = (req, res) => {
+    User.find()
         .then(users => res.json(users))
         .catch(err => {
             console.log(err);

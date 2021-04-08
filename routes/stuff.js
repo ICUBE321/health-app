@@ -31,6 +31,7 @@ router.get('/prescription/single', stuffCtrl.getSinglePrescription);
 router.delete('/prescription/delete', stuffCtrl.deletePrescription);
 
 //processing of routes
-router.get('/user', stuffCtrl.getUsers);
+router.get('/user', stuffCtrl.getUser);
+router.get('/users', stuffCtrl.getUsers);
 
 module.exports = router;

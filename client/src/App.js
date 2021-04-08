@@ -14,6 +14,8 @@ import Signup from "./components/signup.component";
 import Detail from "./components/detail.component";
 import addAppointments from "./components/addAppointment.component";
 import addPrescription from "./components/addPrescription.component";
+import Patients from "./components/patients.component";
+import PatientDetail from "./components/patientDetail.component";
 
 //always show navbar on each component page
 //each component route path defined
@@ -37,6 +39,8 @@ function App () {
                 <Route path="/dlogin" exact component={DocLogin}/>
                 <Route path="/details" exact component={Detail}/>
                 <Route path="/profile" exact component={Profile}/>
+                <Route path="/patients" exact component={Patients}/>
+                <Route path="/patientDetail/:id" exact component={PatientDetail}/>
                 <Route path="/findclinic" exact component={FindClinic}/>
                 <Route path="/findlab" exact component={FindLab}/>
             </div>
