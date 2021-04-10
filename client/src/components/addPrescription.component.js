@@ -31,12 +31,22 @@ export default class addPrescription extends Component {
             prescribed_quantity : "", 
             refill : "",
             edit: false,
-            prescriptionId: ""
+            prescriptionId: "",
+            user: localStorage.getItem('user'),
+            doctor: localStorage.getItem('doctor'),
         }
     }
 
     componentDidMount() {
-        this.getPrescriptionDetails();
+        const userDetails = this.state.user;
+        const parsedUserDetails = JSON.parse(userDetails);
+        const doctorDetails = this.state.doctor;
+        const parsedDoctorDetails = JSON.parse(doctorDetails);
+        if(parsedDoctorDetails && parsedDoctorDetails.length > 0) {
+            this.getPrescriptionDetails();
+        } else {
+            window.location = "/";
+        }
     }
 
     getPrescriptionDetails = () => {

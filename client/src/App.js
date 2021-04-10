@@ -41,8 +41,6 @@ function App () {
                 <Route path="/profile" exact component={Profile}/>
                 <Route path="/patients" exact component={Patients}/>
                 <Route path="/patientDetail/:id" exact component={PatientDetail}/>
-                <Route path="/findclinic" exact component={FindClinic}/>
-                <Route path="/findlab" exact component={FindLab}/>
             </div>
         </Router>
     );

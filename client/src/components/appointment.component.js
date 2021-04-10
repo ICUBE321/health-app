@@ -55,6 +55,8 @@ export default class Appointments extends Component {
                 console.log(error.response.data);
                 window.alert(error.response.data);
             })
+        } else {
+            window.location = "/";
         }
     }
 

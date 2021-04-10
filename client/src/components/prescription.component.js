@@ -54,6 +54,8 @@ export default class Prescriptions extends Component {
                 console.log(error.response.data);
                 window.alert(error.response.data);
             })
+        } else {
+            window.location = "/";
         }
     }
 

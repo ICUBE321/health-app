@@ -23,13 +23,23 @@ export default class addAppointments extends Component {
             date : new Date(),
             time : "",
             edit: false,
-            appointmentId: ""
+            appointmentId: "",
+            user: localStorage.getItem('user'),
+            doctor: localStorage.getItem('doctor'),
         }
 
     }
 
     componentDidMount() {
-        this.getAppointmentDetails();
+        const userDetails = this.state.user;
+        const parsedUserDetails = JSON.parse(userDetails);
+        const doctorDetails = this.state.doctor;
+        const parsedDoctorDetails = JSON.parse(doctorDetails);
+        if(parsedDoctorDetails && parsedDoctorDetails.length > 0) {
+            this.getAppointmentDetails();
+        } else {
+            window.location = "/";
+        }
     }
 
     getAppointmentDetails = () => {

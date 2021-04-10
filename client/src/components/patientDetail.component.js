@@ -15,7 +15,15 @@ export default class PatientDetail extends Component {
     }
 
     componentDidMount(){
-        this.userDetails();
+        const userDetails = this.state.user;
+        const parsedUserDetails = JSON.parse(userDetails);
+        const doctorDetails = this.state.doctor;
+        const parsedDoctorDetails = JSON.parse(doctorDetails);
+        if(parsedDoctorDetails && parsedDoctorDetails.length > 0) {
+            this.userDetails();
+        } else {
+            window.location = "/";
+        }
     }
 
     userDetails = () => {

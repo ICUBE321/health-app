@@ -8,12 +8,21 @@ export default class Profile extends Component {
 
         this.state={
             user: localStorage.getItem('user'),
+            doctor: localStorage.getItem('doctor'),
             details: []
         };
     }
 
     componentDidMount(){
-        this.userDetails();
+        const userDetails = this.state.user;
+        const parsedUserDetails = JSON.parse(userDetails);
+        const doctorDetails = this.state.doctor;
+        const parsedDoctorDetails = JSON.parse(doctorDetails);
+        if(parsedUserDetails && parsedUserDetails.length > 0) {
+            this.userDetails();
+        } else {
+            window.location = "/";
+        }
     }
 
     userDetails = () => {

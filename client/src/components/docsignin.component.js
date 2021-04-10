@@ -28,7 +28,6 @@ export default class DocLogin extends Component {
         const loggedInDoctor = localStorage.getItem('doctor');
         if(loggedInDoctor) {
             window.location = "/";
-            //window.alert("Logged in");
         }
     }
 
@@ -58,8 +57,6 @@ export default class DocLogin extends Component {
             doctorId: this.state.docid,
             password: this.state.password,
         };
-
-        console.log(doctor);
 
         axios.post("/api/doctor/auth/login", doctor)
             .then(res => {
