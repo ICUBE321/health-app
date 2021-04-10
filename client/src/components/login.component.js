@@ -85,7 +85,8 @@ export default class Login extends Component {
                             placeholder="1234567890CA" 
                             className="form-control" id="uhcn"
                             value={this.state.username}
-                            onChange={this.onChangeUsername}/>
+                            onChange={this.onChangeUsername}
+                            required/>
                     </div>
     
                     <div className="form-group">
@@ -93,7 +94,8 @@ export default class Login extends Component {
                         <input type="password" 
                             className="form-control" id="upass" 
                             value={this.state.password} 
-                            onChange={this.onChangePassword}/>
+                            onChange={this.onChangePassword}
+                            required/>
                     </div>
     
                     <button type="submit" className="btn btn-primary btn-lg" id="btn-signin">Login</button>

@@ -85,27 +85,27 @@ export default class Signup extends Component {
                     <form onSubmit={this.onHandleSubmit} id="regform" method="post">
                         <div className="form-group">
                             <label for="firstname">First Name</label>
-                            <input type="text" placeholder="John" className="form-control" id="fname" value={this.state.firstname} onChange={this.onChangeFirstname}/>
+                            <input type="text" placeholder="John" className="form-control" id="fname" value={this.state.firstname} onChange={this.onChangeFirstname} required/>
                         </div>
 
                         <div className="form-group">
                             <label for="lastname">Last Name</label>
-                            <input type="text" placeholder="Doe" className="form-control" id="lname" value={this.state.lastname} onChange={this.onChangeLastname}/>
+                            <input type="text" placeholder="Doe" className="form-control" id="lname" value={this.state.lastname} onChange={this.onChangeLastname} required/>
                         </div>
 
                         <div className="form-group">
                             <label for="hcn">Healthcard Number</label>
-                            <input type="text" placeholder="1234567890CA" pattern="^[1-9]{10}[A-Z]{2}$" className="form-control" id="uhcn" value={this.state.healthcardno} onChange={this.onChangeHealthcardno}/>
+                            <input type="text" placeholder="1234567890CA" pattern="^[1-9]{10}[A-Z]{2}$" className="form-control" id="uhcn" value={this.state.healthcardno} onChange={this.onChangeHealthcardno} required/>
                         </div>
 
                         <div className="form-group">
                             <label for="email">Email</label>
-                            <input type="email" placeholder="johndoe@email.com" className="form-control" id="uemail" value={this.state.email} onChange={this.onChangeEmail}/>
+                            <input type="email" placeholder="johndoe@email.com" className="form-control" id="uemail" value={this.state.email} onChange={this.onChangeEmail} required/>
                         </div>
 
                         <div className="form-group">
                             <label for="password">Password</label>
-                            <input type="password" className="form-control" id="upass" value={this.state.password} onChange={this.onChangePassword}/>
+                            <input type="password" className="form-control" id="upass" value={this.state.password} onChange={this.onChangePassword} required/>
                         </div>
 
                         <button type="submit" className="btn btn-primary btn-lg" id="btn-reg">Register</button>
