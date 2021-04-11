@@ -19,7 +19,7 @@ var healthcardValidator = [
 
 //create new Prescription schema/document for the database
 const prescriptionSchema = new Schema({
-    healthcardno: { type: String, required: true, unique: true, trim: true, validate: healthcardValidator },
+    healthcardno: { type: String, required: true, trim: true, validate: healthcardValidator },
     date: { type: Date, required: true },
     ailment: { type: String, required: true },
     medicine: { type: String, required: true },
