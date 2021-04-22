@@ -26,6 +26,8 @@ const appointmentSchema = new Schema({
     timestamps: true,
 });
 
+appointmentSchema.index({ healthcardno: 1, date: 1, time: 1 }, { unique: true });
+
 //export appointment model
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 

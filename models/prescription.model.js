@@ -30,6 +30,8 @@ const prescriptionSchema = new Schema({
     timestamps: true,
 });
 
+prescriptionSchema.index({ healthcardno: 1, ailment: 1, medicine: 1 }, { unique: true });
+
 //export Prescription model
 const Prescription = mongoose.model('Prescription', prescriptionSchema);
 
