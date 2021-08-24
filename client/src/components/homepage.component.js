@@ -1,14 +1,16 @@
 //A homepage
 
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+
+import shared from "./shared.module.css";
+import styles from "./homepage.module.css";
 
 export default class Homepage extends Component {
     
     render() {
         return (
-            <div>
-                <p>Welcome to our Health App</p>
+            <div className={`${shared["container-div"]} ${styles.homepage}`}>
+                <h1 className={styles.message}>Welcome to our Health App</h1>
             </div>
         )
     }

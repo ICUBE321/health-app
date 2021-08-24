@@ -1,0 +1,12 @@
+.homepage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.message {
+  color: #0084c0;
+}
+
+ 

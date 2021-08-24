@@ -1,0 +1,70 @@
+.detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+  color: #0084c0;
+}
+
+.heading {
+  font-weight: bold;
+}
+
+.form {
+  background: #0084c0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-radius: 4.8px;
+  width: 60vw;
+  text-align: center;
+  padding: 1rem;
+}
+
+.form-group > label {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.form-group > label,
+.form-group > .form-control {
+  display: block;
+}
+
+.form-control {
+  width: 100%;
+  border-radius: 4.8px;
+  border: none;
+}
+
+.bloodtype {
+  display: grid;
+  grid-template-columns: repeat(8, 12%);
+  grid-gap: 1rem;
+  justify-content: center;
+}
+
+.donor {
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  grid-gap: 1rem;
+  justify-content: center;
+}
+
+.button {
+  border: 2px solid #0084c0;
+  border-radius: 0.2rem;
+  background: white;
+  color: #0084c0;
+  margin: 1.5rem;
+  margin-bottom: 0;
+  padding: 0.5rem;
+}
+
+.button:hover {
+  border: 2px solid white;
+  background: #486bab;
+  color: white;
+}

@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
+html ,
+body {
+  height: 100%;
+}
+
+.container-div {
+  background: linear-gradient(#ccc 10%, transparent),
+    url("../images/homepage.jpg");
+  background-size: cover;
+  background-position: center;
+  height: fit-content;
+}

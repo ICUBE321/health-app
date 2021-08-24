@@ -1,0 +1,26 @@
+.patients {
+  color: #0084c0;
+  height: 100vh;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toggle {
+  border: none;
+  background-color: #dfdede;
+}
+
+.details {
+  padding: 0.5rem;
+}
+
+.details:hover {
+  text-decoration: none;
+  color: white;
+  background-color: cornflowerblue;
+  border-radius: 3px;
+}
