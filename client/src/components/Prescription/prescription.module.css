@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 2rem;
+  padding-top: 100px;
 }
 
 .blue-button {
@@ -25,7 +25,7 @@
   border-radius: 0.2rem;
   background: white;
   color: #ac2609;
-  margin: 0 1.5rem;
+  margin: 0 0.5rem;
   padding: 0.5rem;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .accordion {
-  margin: 1rem;
+  margin: 1rem 0;
   width: 100%;
 }
 
@@ -47,7 +47,21 @@
 }
 
 .toggle {
-  margin: 1rem;
   border: none;
   background-color: #dfdede;
+  width: 50%;
+}
+
+@media (min-width: 40rem) {
+  .accordion {
+    width: 80%;
+  }
+
+  .cancel-button {
+    margin: 0 1.5rem;
+  }
+
+  .toggle {
+    margin: 1rem;
+  }
 }

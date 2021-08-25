@@ -1,6 +1,9 @@
 .patients {
   color: #0084c0;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .header {
@@ -12,6 +15,7 @@
 .toggle {
   border: none;
   background-color: #dfdede;
+  width: 50%;
 }
 
 .details {
@@ -23,4 +27,15 @@
   color: white;
   background-color: cornflowerblue;
   border-radius: 3px;
+}
+
+@media (min-width: 40rem) {
+  .accordion {
+    width: 80%;
+    max-width: 800px;
+  }
+
+  .toggle {
+    margin: 1rem;
+  }
 }

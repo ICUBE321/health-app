@@ -46,7 +46,7 @@ export default class Patients extends Component {
   render() {
     return (
       <div className={`${shared["container-div"]} ${styles.patients}`}>
-        <Accordion>
+        <Accordion className={styles.accordion}>
           {this.state.patients.map(
             ({ healthcardno, firstname, lastname, email }) => (
               <Card className={styles.card}>

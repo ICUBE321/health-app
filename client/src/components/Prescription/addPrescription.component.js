@@ -223,7 +223,7 @@ export default class addPrescription extends Component {
                   />
                 </div>
                 <div className={styles["input-group"]}>
-                  <label>Dispensed Amount</label>
+                  <label>Dispensed Amount:</label>
                   <Field
                     name="volume"
                     id="volume"
@@ -259,7 +259,7 @@ export default class addPrescription extends Component {
                   />
                 </div>
                 <div className={styles["input-group"]}>
-                  <label>Refills</label>
+                  <label>Refills:</label>
                   <Field
                     name="refill"
                     id="refill"

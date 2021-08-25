@@ -3,10 +3,18 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  padding: 0;
 }
 
 .message {
   color: #0084c0;
+  font-size: 1.7rem;
+}
+
+@media (min-width: 40rem) {
+  .message {
+    font-size: 3rem;
+  }
 }
 
  

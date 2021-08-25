@@ -13,4 +13,5 @@ body {
   background-size: cover;
   background-position: center;
   height: fit-content;
+  padding-top: 68px;
 }
